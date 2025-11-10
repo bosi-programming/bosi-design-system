@@ -2,6 +2,7 @@
 
 Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
 
+;/* empty css         */
 const jsxRuntime = require('react/jsx-runtime');
 require('react');
 

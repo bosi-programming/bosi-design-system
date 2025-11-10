@@ -4,6 +4,7 @@ import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react-swc";
 import { defineConfig } from "vite";
 import dts from "vite-plugin-dts";
+import { svelte } from "@sveltejs/vite-plugin-svelte";
 
 import { peerDependencies } from "./package.json";
 
@@ -12,13 +13,19 @@ export default defineConfig({
     react(),
     tailwindcss(),
     dts({ rollupTypes: true }), // Output .d.ts files
+    svelte(),
   ],
   build: {
+    cssCodeSplit: true,
     target: "esnext",
     minify: false,
     lib: {
-      entry: resolve(__dirname, join("lib", "index.ts")),
-      fileName: "index",
+      entry: [
+        resolve(__dirname, join("lib/React", "react.ts")),
+        resolve(__dirname, join("lib/Svelte", "svelte.ts")),
+        resolve(__dirname, join("lib", "global.css")),
+      ],
+      fileName: (format, entryName) => `${entryName}.${format}`,
       cssFileName: "style",
       formats: ["es", "cjs"],
     },
