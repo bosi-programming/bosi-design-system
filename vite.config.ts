@@ -13,7 +13,11 @@ export default defineConfig({
     react(),
     tailwindcss(),
     dts({ rollupTypes: true }), // Output .d.ts files
-    svelte(),
+    svelte({
+      compilerOptions: {
+        customElement: false,
+      },
+    }),
   ],
   build: {
     cssCodeSplit: true,
@@ -31,7 +35,12 @@ export default defineConfig({
     },
     rollupOptions: {
       // Exclude peer dependencies from the bundle to reduce bundle size
-      external: ["react/jsx-runtime", ...Object.keys(peerDependencies)],
+      external: ["react/jsx-runtime", ...Object.keys(peerDependencies), "svelte", "svelte/internal"],
+      output: {
+        globals: {
+          svelte: "Svelte",
+        },
+      },
     },
   },
   test: {
