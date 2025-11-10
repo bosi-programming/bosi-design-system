@@ -1,6 +1,6 @@
 {
   "name": "bosi-components",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Bosi Design System for React and Svelte",
   "author": "Felipe Azevedo Bosi",
   "license": "GPLv3",
@@ -32,7 +32,7 @@
         "default": "./dist/svelte.cjs"
       }
     },
-    "./css": "./dist/style.css"
+    "./css": "./dist/global.css"
   },
   "scripts": {
     "dev": "storybook dev -p 6006",
