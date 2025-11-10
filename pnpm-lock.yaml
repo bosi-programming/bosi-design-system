@@ -7,6 +7,10 @@ settings:
 importers:
 
   .:
+    dependencies:
+      svelte:
+        specifier: ^5.0.0
+        version: 5.43.5
     devDependencies:
       '@eslint/compat':
         specifier: ^1.2.3
@@ -119,9 +123,6 @@ importers:
       storybook:
         specifier: ^8.5.3
         version: 8.6.14(prettier@3.6.2)
-      svelte:
-        specifier: ^5.0.0
-        version: 5.43.5
       svelte-check:
         specifier: ^4.0.0
         version: 4.3.3(picomatch@4.0.3)(svelte@5.43.5)(typescript@5.9.2)
