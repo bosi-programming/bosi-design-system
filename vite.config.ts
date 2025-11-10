@@ -5,8 +5,6 @@ import react from "@vitejs/plugin-react-swc";
 import { defineConfig } from "vite";
 import dts from "vite-plugin-dts";
 
-import { peerDependencies } from "./package.json";
-
 export default defineConfig({
   plugins: [
     react(),
@@ -14,18 +12,19 @@ export default defineConfig({
     dts({ rollupTypes: true }), // Output .d.ts files
   ],
   build: {
+    outDir: "./react-dist",
     cssCodeSplit: true,
     target: "esnext",
     minify: false,
     lib: {
-      entry: [resolve(__dirname, join("lib/React", "react.ts")), resolve(__dirname, join("lib", "global.css"))],
+      entry: [resolve(__dirname, join("lib", "react.ts")), resolve(__dirname, join("lib", "global.css"))],
       fileName: (format, entryName) => `${entryName}.${format === "es" ? "js" : format}`,
       cssFileName: "style",
       formats: ["es", "cjs"],
     },
     rollupOptions: {
       // Exclude peer dependencies from the bundle to reduce bundle size
-      external: ["react/jsx-runtime", ...Object.keys(peerDependencies), "svelte", "svelte/internal"],
+      external: ["react/jsx-runtime", "react", "react-dom", "svelte", "svelte/internal"],
       output: {
         globals: {
           svelte: "Svelte",
