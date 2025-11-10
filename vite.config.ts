@@ -25,7 +25,7 @@ export default defineConfig({
         resolve(__dirname, join("lib/Svelte", "svelte.ts")),
         resolve(__dirname, join("lib", "global.css")),
       ],
-      fileName: (format, entryName) => `${entryName}.${format}`,
+      fileName: (format, entryName) => `${entryName}.${format === "es" ? "js" : format}`,
       cssFileName: "style",
       formats: ["es", "cjs"],
     },
