@@ -1,3 +1,4 @@
-import "./global.css";
+import './global.css';
 
-export * from "./Svelte";
+export * from './Svelte';
+export * from './globals';

@@ -24,9 +24,9 @@
     },
     "./svelte": {
       "import": {
-        "types": "./svelte-dist/index.d.ts",
-        "svelte": "./svelte-dist/index.js",
-        "default": "./svelte-dist/index.js"
+        "types": "./svelte-dist/svelte.d.ts",
+        "svelte": "./svelte-dist/svelte.js",
+        "default": "./svelte-dist/svelte.js"
       }
     },
     "./css": "./dist/global.css"
@@ -37,7 +37,7 @@
     "test:watch": "vitest",
     "build": "storybook build",
     "build:lib": "rm -rf react-dist svelte-dist && tsc && vite build && pnpm build:svelte",
-    "build:svelte": "svelte-package -i ./lib/Svelte -o ./svelte-dist",
+    "build:svelte": "svelte-package -i ./lib -o ./svelte-dist",
     "lint": "prettier --check . && eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "format": "prettier . --write --ignore-unknown",
     "prepare": "husky install"
