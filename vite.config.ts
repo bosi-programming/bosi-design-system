@@ -4,6 +4,15 @@ import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react-swc';
 import { defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
+import { fileURLToPath } from 'node:url';
+
+const filesNeedToExclude = ['lib/Svelte/*', 'lib/svelte.ts', 'lib/svelte.d.ts'];
+
+const filesPathToExclude = filesNeedToExclude.map((src) => {
+  return fileURLToPath(new URL(src, import.meta.url));
+});
+
+console.log(filesPathToExclude);
 
 export default defineConfig({
   plugins: [
@@ -24,7 +33,7 @@ export default defineConfig({
     },
     rollupOptions: {
       // Exclude peer dependencies from the bundle to reduce bundle size
-      external: ['react/jsx-runtime', 'react', 'react-dom', 'svelte', 'svelte/internal'],
+      external: ['react/jsx-runtime', 'react', 'react-dom', 'svelte', 'svelte/internal', ...filesPathToExclude],
       output: {
         globals: {
           svelte: 'Svelte',

@@ -1,6 +1,6 @@
 {
   "name": "bosi-design-system",
-  "version": "0.1.5",
+  "version": "0.2.0",
   "description": "Bosi Design System for React and Svelte",
   "author": "Felipe Azevedo Bosi",
   "license": "GPLv3",
@@ -36,8 +36,9 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "build": "storybook build",
-    "build:lib": "rm -rf react-dist svelte-dist && tsc && vite build && pnpm build:svelte",
-    "build:svelte": "svelte-package -i ./lib -o ./svelte-dist",
+    "build:lib": "rm -rf react-dist svelte-dist && pnpm build:react && pnpm build:svelte",
+    "build:react": "tsc && vite build",
+    "build:svelte": "svelte-package -i ./lib -o ./svelte-dist && rm -rf ./svelte-dist/React ./svelte-dist/react.*",
     "lint": "prettier --check . && eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "format": "prettier . --write --ignore-unknown",
     "prepare": "husky install"
@@ -85,8 +86,9 @@
     "tailwind-merge": "3.0.1",
     "tailwindcss": "4.0.0",
     "ts-pattern": "^5.8.0",
-    "typescript": "^5.7.3",
+    "typescript": "5.8.2",
     "typescript-eslint": "^8.0.0",
+    "typescript-svelte-plugin": "0.3.50",
     "vite": "^6.0.11",
     "vite-plugin-dts": "^4.5.0",
     "vitest": "^3.0.5"

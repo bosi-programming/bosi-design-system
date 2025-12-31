@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import { getComponent, getFinalClassName, type TypographyProps as BaseTypographyProps } from '../../globals/Typography';
 
-export interface TypographyProps extends BaseTypographyProps {
+interface TypographyProps extends BaseTypographyProps {
   children: ReactNode;
 }
 
