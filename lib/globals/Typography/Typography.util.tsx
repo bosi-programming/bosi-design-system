@@ -1,5 +1,5 @@
 import { match, P } from 'ts-pattern';
-import { type TypographyProps } from './Typography';
+import { type TypographyProps } from '../../React/Typography/Typography';
 
 export function colorClass(color: TypographyProps['color']) {
   return match(color)
@@ -20,8 +20,8 @@ export function sizeClass(size: TypographyProps['size']) {
     .exhaustive();
 }
 
-export function getComponent(size: TypographyProps["size"], as: TypographyProps["as"]) {
+export function getComponent(size: TypographyProps['size'], as: TypographyProps['as']) {
   if (as) return as;
-  if (size === "body") return "p";
-  return size || "p";
+  if (size === 'body') return 'p';
+  return size || 'p';
 }

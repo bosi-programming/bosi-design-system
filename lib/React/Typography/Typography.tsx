@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { colorClass, getComponent, sizeClass } from "./Typography.util";
+import { colorClass, getComponent, sizeClass } from "../../globals/Typography/Typography.util";
 
 export type TColor = "default" | "primary" | "secondary";
 
