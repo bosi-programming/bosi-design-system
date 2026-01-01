@@ -1,12 +1,13 @@
 {
   "name": "bosi-design-system",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Bosi Design System for React and Svelte",
   "author": "Felipe Azevedo Bosi",
   "license": "GPLv3",
   "type": "module",
   "files": [
-    "dist"
+    "react-dist",
+    "svelte-dist"
   ],
   "sideEffects": [
     "**/*.css"
