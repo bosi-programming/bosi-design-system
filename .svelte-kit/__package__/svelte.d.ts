@@ -1,4 +1,3 @@
-import './global.css';
-export * from './Svelte';
+export { default as Typography } from './Svelte/Typography/Typography.svelte';
 export * from './globals';
 //# sourceMappingURL=svelte.d.ts.map
