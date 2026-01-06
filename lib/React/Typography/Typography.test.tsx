@@ -48,6 +48,18 @@ describe('Typography as and size options', () => {
     render(<Typography>Test</Typography>);
     expect(screen.getByRole('paragraph')).toBeInTheDocument();
   });
+  it('should render a link when as="a"', () => {
+    render(
+      <Typography as="a" href="https://example.com" target="_blank" rel="noopener noreferrer">
+        Test Link
+      </Typography>,
+    );
+    const link = screen.getByRole('link');
+    expect(link).toBeInTheDocument();
+    expect(link).toHaveAttribute('href', 'https://example.com');
+    expect(link).toHaveAttribute('target', '_blank');
+    expect(link).toHaveAttribute('rel', 'noopener noreferrer');
+  });
 });
 
 describe('Typography color options', () => {
