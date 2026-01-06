@@ -1,11 +1,11 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from '@storybook/react';
 
-import { Card } from "./Card";
-import { Button } from "../Button";
-import { Typography } from "../Typography";
+import { Card } from './Card';
+import { Button } from '../Button';
+import { Typography } from '../Typography';
 
 const meta = {
-  title: "Components/Card",
+  title: 'Components/Card',
   component: Card,
 } satisfies Meta<typeof Card>;
 
@@ -15,7 +15,7 @@ type Story = StoryObj<typeof Card>;
 
 export const DefaultCard: Story = {
   args: {
-    title: "Card",
+    title: 'Card',
     content: <Typography>Content</Typography>,
     actions: <Button action="success">Click me</Button>,
   },

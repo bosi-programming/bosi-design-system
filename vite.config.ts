@@ -2,6 +2,7 @@
 import { join, resolve } from 'node:path';
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react-swc';
+import { svelte } from '@sveltejs/vite-plugin-svelte';
 import { defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
 import { fileURLToPath } from 'node:url';
@@ -14,12 +15,14 @@ const filesPathToExclude = filesNeedToExclude.map((src) => {
 
 console.log(filesPathToExclude);
 
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   plugins: [
     react(),
+    // Add Svelte plugin for testing Svelte components
+    mode === 'test' && svelte({ hot: false }),
     tailwindcss(),
     dts({ rollupTypes: true }), // Output .d.ts files
-  ],
+  ].filter(Boolean),
   build: {
     outDir: './react-dist',
     cssCodeSplit: true,
@@ -49,4 +52,7 @@ export default defineConfig({
       enabled: true,
     },
   },
-});
+  resolve: {
+    conditions: mode === 'test' ? ['browser'] : undefined,
+  },
+}));

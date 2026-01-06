@@ -1,1 +1,1 @@
-export const nonCardClasses = "p-4 rounded-md";
+export const nonCardClasses = 'p-4 rounded-md';

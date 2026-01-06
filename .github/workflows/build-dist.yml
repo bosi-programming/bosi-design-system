@@ -4,7 +4,7 @@ name: Build dist
 on:
   # Runs on pushes targeting the default branch
   push:
-    branches: ["main"]
+    branches: ['main']
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -17,7 +17,7 @@ permissions:
 # Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
 # However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
 concurrency:
-  group: "build"
+  group: 'build'
   cancel-in-progress: false
 
 jobs:
@@ -36,9 +36,9 @@ jobs:
       - name: Commit dist
         uses: devops-infra/action-commit-push@master
         with:
-          github_token: "${{ secrets.GITHUB_TOKEN }}"
-          commit_prefix: "[AUTO]"
-          commit_message: "Automatic commit"
+          github_token: '${{ secrets.GITHUB_TOKEN }}'
+          commit_prefix: '[AUTO]'
+          commit_message: 'Automatic commit'
           force: false
           force_with_lease: false
           target_branch: main

@@ -1,35 +1,17 @@
-import { type ReactNode } from "react";
-import { baseButtonClasses, sizeClasses } from "./Button.styles";
-import { getColor } from "./Button.utils";
+import { type ReactNode } from 'react';
+import { type ButtonProps as BaseButtonProps, getFinalClassName } from '../../globals/Button';
 
-export interface ButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
+export interface ButtonProps
+  extends Omit<React.HTMLAttributes<HTMLButtonElement>, 'color' | 'className'>,
+    BaseButtonProps {
   children: ReactNode;
-  className?: string;
-  color?: "default" | "primary" | "secondary";
-  size?: "small" | "medium" | "full-width";
-  action?: "error" | "warning" | "success" | "info";
 }
 
-export const Button = ({
-  children,
-  className,
-  onClick,
-  color = "default",
-  size = "medium",
-  action,
-  ...props
-}: ButtonProps) => {
-  const colorClass = getColor(action, color);
-  const sizeClass = sizeClasses[size];
-  const buttonClasses = `
-    ${baseButtonClasses}${" "}
-    ${colorClass}${" "}
-    ${sizeClass}${" "}
-    ${className ? className : ""}
-  `;
+export const Button = ({ children, className, color = 'default', size = 'medium', action, ...props }: ButtonProps) => {
+  const buttonClasses = getFinalClassName(action, color, size, className);
 
   return (
-    <button onClick={onClick} className={buttonClasses} {...props}>
+    <button className={buttonClasses} {...props}>
       {children}
     </button>
   );

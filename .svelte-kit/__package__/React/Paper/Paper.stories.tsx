@@ -1,9 +1,9 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { Paper } from "./Paper";
-import { Typography } from "../Typography";
+import type { Meta, StoryObj } from '@storybook/react';
+import { Paper } from './Paper';
+import { Typography } from '../Typography';
 
 const meta = {
-  title: "Components/Paper",
+  title: 'Components/Paper',
   component: Paper,
 } satisfies Meta<typeof Paper>;
 
