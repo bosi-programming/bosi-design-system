@@ -28,13 +28,20 @@
   :root, :host {
     --font-sans: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    --color-red-400: oklch(70.4% .191 22.216);
+    --color-red-700: oklch(50.5% .213 27.518);
+    --color-blue-500: oklch(62.3% .214 259.815);
+    --color-gray-50: oklch(98.5% .002 247.839);
+    --color-gray-300: oklch(87.2% .01 258.338);
+    --color-gray-400: oklch(70.7% .022 261.325);
+    --color-gray-500: oklch(55.1% .027 264.364);
+    --color-gray-900: oklch(21% .034 264.665);
     --color-black: #2f3032;
     --color-white: #fff;
     --spacing: .25rem;
     --font-weight-bold: 700;
-    --radius-md: .375rem;
     --radius-lg: .5rem;
-    --radius-3xl: 1.5rem;
+    --radius-xl: .75rem;
     --default-font-family: var(--font-sans);
     --default-font-feature-settings: var(--font-sans--font-feature-settings);
     --default-font-variation-settings: var(--font-sans--font-variation-settings);
@@ -47,6 +54,8 @@
     --text-h3: 1.5rem;
     --text-h4: 1.25rem;
     --text-details: .875rem;
+    --color-emerald: #0d9263;
+    --color-green: #1e2d2f;
     --color-gray-15: #212529;
     --color-gray-93: #eee;
     --color-primary-on-light: #246347;
@@ -345,12 +354,20 @@
     }
   }
 
+  .mt-1 {
+    margin-top: calc(var(--spacing) * 1);
+  }
+
   .mt-2 {
     margin-top: calc(var(--spacing) * 2);
   }
 
   .mb-4 {
     margin-bottom: calc(var(--spacing) * 4);
+  }
+
+  .ml-2 {
+    margin-left: calc(var(--spacing) * 2);
   }
 
   .contents {
@@ -385,16 +402,12 @@
     justify-content: space-between;
   }
 
-  .rounded-3xl {
-    border-radius: var(--radius-3xl);
-  }
-
   .rounded-lg {
     border-radius: var(--radius-lg);
   }
 
-  .rounded-md {
-    border-radius: var(--radius-md);
+  .rounded-xl {
+    border-radius: var(--radius-xl);
   }
 
   .border {
@@ -411,12 +424,24 @@
     border-color: var(--color-black);
   }
 
+  .border-gray-300 {
+    border-color: var(--color-gray-300);
+  }
+
+  .border-red-700 {
+    border-color: var(--color-red-700);
+  }
+
   .bg-background-on-light {
     background-color: var(--color-background-on-light);
   }
 
   .bg-error {
     background-color: var(--color-error);
+  }
+
+  .bg-gray-50 {
+    background-color: var(--color-gray-50);
   }
 
   .bg-info {
@@ -441,6 +466,10 @@
 
   .p-4 {
     padding: calc(var(--spacing) * 4);
+  }
+
+  .px-2 {
+    padding-inline: calc(var(--spacing) * 2);
   }
 
   .px-4 {
@@ -496,8 +525,16 @@
     font-weight: var(--font-weight-bold);
   }
 
+  .text-gray-900 {
+    color: var(--color-gray-900);
+  }
+
   .text-primary-on-light {
     color: var(--color-primary-on-light);
+  }
+
+  .text-red-700 {
+    color: var(--color-red-700);
   }
 
   .text-secondary-on-light {
@@ -510,6 +547,10 @@
 
   .outline-transparent {
     outline-color: #0000;
+  }
+
+  .placeholder\:text-gray-500::placeholder {
+    color: var(--color-gray-500);
   }
 
   @media (hover: hover) {
@@ -526,6 +567,14 @@
     }
   }
 
+  .focus\:border-blue-500:focus {
+    border-color: var(--color-blue-500);
+  }
+
+  .focus\:ring-blue-500:focus {
+    --tw-ring-color: var(--color-blue-500);
+  }
+
   .disabled\:cursor-not-allowed:disabled {
     cursor: not-allowed;
   }
@@ -540,12 +589,24 @@
     }
   }
 
+  .dark\:border-emerald:where(.dark, .dark *) {
+    border-color: var(--color-emerald);
+  }
+
+  .dark\:border-red-400:where(.dark, .dark *) {
+    border-color: var(--color-red-400);
+  }
+
   .dark\:border-white:where(.dark, .dark *) {
     border-color: var(--color-white);
   }
 
   .dark\:bg-background-on-dark:where(.dark, .dark *) {
     background-color: var(--color-background-on-dark);
+  }
+
+  .dark\:bg-green:where(.dark, .dark *) {
+    background-color: var(--color-green);
   }
 
   .dark\:bg-primary-on-dark:where(.dark, .dark *) {
@@ -568,8 +629,28 @@
     color: var(--color-primary-on-dark);
   }
 
+  .dark\:text-red-400:where(.dark, .dark *) {
+    color: var(--color-red-400);
+  }
+
   .dark\:text-secondary-on-dark:where(.dark, .dark *) {
     color: var(--color-secondary-on-dark);
+  }
+
+  .dark\:text-white:where(.dark, .dark *) {
+    color: var(--color-white);
+  }
+
+  .dark\:placeholder\:text-gray-400:where(.dark, .dark *)::placeholder {
+    color: var(--color-gray-400);
+  }
+
+  .dark\:focus\:border-emerald:where(.dark, .dark *):focus {
+    border-color: var(--color-emerald);
+  }
+
+  .dark\:focus\:ring-emerald:where(.dark, .dark *):focus {
+    --tw-ring-color: var(--color-emerald);
   }
 }
 
