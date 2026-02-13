@@ -68,17 +68,19 @@ function Typography({
   as,
   href,
   target,
-  rel
+  rel,
+  htmlFor,
+  id
 }) {
   const finalClassName = getFinalClassName(color, size, className);
   const Component = getComponent(size, as);
   if (Component === "a") {
-    return /* @__PURE__ */ jsxRuntime.jsx(Component, { className: finalClassName, href, target, rel, children });
+    return /* @__PURE__ */ jsxRuntime.jsx(Component, { id, className: finalClassName, href, target, rel, children });
   }
-  return /* @__PURE__ */ jsxRuntime.jsx(Component, { className: finalClassName, children });
+  return /* @__PURE__ */ jsxRuntime.jsx(Component, { id, htmlFor, className: finalClassName, children });
 }
 
-const nonCardClasses = "p-4 rounded-md";
+const nonCardClasses = "p-4 rounded-xl";
 
 function Paper({ children, className, isCard, ...rest }) {
   return /* @__PURE__ */ jsxRuntime.jsx(
@@ -95,7 +97,7 @@ function Card({ title, content, actions, className }) {
   return /* @__PURE__ */ jsxRuntime.jsxs(
     Paper,
     {
-      className: `flex h-[365px] w-full flex-col items-center justify-between rounded-3xl px-5 py-6 md:w-[270px] ${className ? className : ""}`,
+      className: `flex h-[365px] w-full flex-col items-center justify-between rounded-xl px-5 py-6 md:w-[270px] ${className ? className : ""}`,
       "data-testid": "card",
       isCard: true,
       children: [

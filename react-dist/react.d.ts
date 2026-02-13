@@ -45,7 +45,7 @@ export declare type TColor = 'default' | 'primary' | 'secondary' | 'error';
 
 export declare type TSize = 'body' | 'h1' | 'h2' | 'h3' | 'h4' | 'details';
 
-export declare function Typography({ color, size, className, children, as, href, target, rel, }: TypographyProps_2): JSX.Element;
+export declare function Typography({ color, size, className, children, as, href, target, rel, htmlFor, id, }: TypographyProps_2): JSX.Element;
 
 export declare interface TypographyProps {
     color?: TColor;
@@ -55,6 +55,8 @@ export declare interface TypographyProps {
     href?: string;
     target?: HTMLAnchorElement['target'];
     rel?: HTMLAnchorElement['rel'];
+    htmlFor?: string;
+    id?: string;
 }
 
 declare interface TypographyProps_2 extends TypographyProps {
