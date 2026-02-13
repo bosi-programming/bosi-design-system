@@ -11,6 +11,8 @@
     href,
     target,
     rel,
+    htmlFor,
+    id,
   }: TypographyProps & {
     children: Snippet | string;
   } = $props();
@@ -30,11 +32,11 @@
 {/snippet}
 
 {#if component === 'a'}
-  <svelte:element this={component} class={finalClassName} {href} {target} {rel}>
+  <svelte:element id={id} this={component} class={finalClassName} {href} {target} {rel}>
     {@render content()}
   </svelte:element>
 {:else}
-  <svelte:element this={component} class={finalClassName}>
+  <svelte:element id={id} for={htmlFor} this={component} class={finalClassName}>
     {@render content()}
   </svelte:element>
 {/if}

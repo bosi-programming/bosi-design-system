@@ -1,0 +1,62 @@
+import { Typography } from '../Typography';
+
+export interface InputProps {
+  name: string;
+  value: string;
+  setValue: (val: string) => void;
+  label?: string;
+  placeholder?: string;
+  className?: string;
+  type?: HTMLInputElement['type'];
+  disabled?: boolean;
+  required?: boolean;
+  error?: string;
+}
+
+const darkClasses =
+  'dark:border-emerald dark:placeholder:text-gray-400 dark:focus:ring-emerald dark:focus:border-emerald dark:bg-green dark:text-white';
+const inputErrorClasses = 'dark:border-red-400 border-red-700';
+const textErrorClasses = 'mt-1 text-red-700 dark:text-red-400';
+
+export function Input({
+  name,
+  disabled,
+  required,
+  value,
+  setValue,
+  label,
+  placeholder,
+  className,
+  type = 'text',
+  error,
+}: InputProps) {
+  return (
+    <div className={`flex w-full flex-col ${className}`}>
+      {label ? (
+        <Typography as="label" id={`label-${name}`} htmlFor={name} className="ml-2">
+          {label}
+          {required ? '*' : null}
+        </Typography>
+      ) : null}
+      <input
+        required={required}
+        id={name}
+        className={`w-full rounded-xl border border-gray-300 bg-gray-50 px-2 py-3 text-gray-900 placeholder:text-gray-500 focus:border-blue-500 focus:ring-blue-500 ${darkClasses} ${error ? inputErrorClasses : null}`}
+        placeholder={placeholder}
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        name={name}
+        type={type}
+        disabled={disabled}
+        aria-invalid={!!error}
+        aria-errormessage={error ? `error-${name}` : undefined}
+        aria-describedby={label ? `label-${name}` : undefined}
+      />
+      {error ? (
+        <Typography size="details" as="p" id={`error-${name}`} className={`ml-2 ${textErrorClasses}`}>
+          {error}
+        </Typography>
+      ) : null}
+    </div>
+  );
+}

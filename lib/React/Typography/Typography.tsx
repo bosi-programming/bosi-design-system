@@ -14,17 +14,23 @@ export function Typography({
   href,
   target,
   rel,
+  htmlFor,
+  id,
 }: TypographyProps) {
   const finalClassName = getFinalClassName(color, size, className);
   const Component = getComponent(size, as);
 
   if (Component === 'a') {
     return (
-      <Component className={finalClassName} href={href} target={target} rel={rel}>
+      <Component id={id} className={finalClassName} href={href} target={target} rel={rel}>
         {children}
       </Component>
     );
   }
 
-  return <Component className={finalClassName}>{children}</Component>;
+  return (
+    <Component id={id} htmlFor={htmlFor} className={finalClassName}>
+      {children}
+    </Component>
+  );
 }

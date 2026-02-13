@@ -9,4 +9,6 @@ export interface TypographyProps {
   href?: string;
   target?: HTMLAnchorElement['target'];
   rel?: HTMLAnchorElement['rel'];
+  htmlFor?: string;
+  id?: string;
 }
