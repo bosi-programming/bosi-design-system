@@ -22,7 +22,7 @@ function getSizeClass(size: ButtonSize | undefined) {
     .exhaustive();
 }
 
-export function getFinalClassName(
+export function getButtonFinalClassName(
   action: ButtonAction | undefined,
   color: ButtonColor | undefined,
   size: ButtonSize | undefined,

@@ -1,5 +1,5 @@
 import { type ReactNode } from 'react';
-import { type ButtonProps as BaseButtonProps, getFinalClassName } from '../../globals/Button';
+import { type ButtonProps as BaseButtonProps, getButtonFinalClassName } from '../../globals';
 
 export interface ButtonProps
   extends Omit<React.HTMLAttributes<HTMLButtonElement>, 'color' | 'className'>,
@@ -8,7 +8,7 @@ export interface ButtonProps
 }
 
 export const Button = ({ children, className, color = 'default', size = 'medium', action, ...props }: ButtonProps) => {
-  const buttonClasses = getFinalClassName(action, color, size, className);
+  const buttonClasses = getButtonFinalClassName(action, color, size, className);
 
   return (
     <button className={buttonClasses} {...props}>

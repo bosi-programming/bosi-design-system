@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { getComponent, getFinalClassName, type TypographyProps as BaseTypographyProps } from '../../globals/Typography';
+import { getComponent, getTypographyFinalClassName, type TypographyProps as BaseTypographyProps } from '../../globals';
 
 interface TypographyProps extends BaseTypographyProps {
   children: ReactNode;
@@ -17,7 +17,7 @@ export function Typography({
   htmlFor,
   id,
 }: TypographyProps) {
-  const finalClassName = getFinalClassName(color, size, className);
+  const finalClassName = getTypographyFinalClassName(color, size, className);
   const Component = getComponent(size, as);
 
   if (Component === 'a') {

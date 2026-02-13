@@ -20,7 +20,11 @@ function sizeClass(size: TypographyProps['size']) {
     .exhaustive();
 }
 
-export function getFinalClassName(color: TypographyProps['color'], size: TypographyProps['size'], className?: string) {
+export function getTypographyFinalClassName(
+  color: TypographyProps['color'],
+  size: TypographyProps['size'],
+  className?: string,
+) {
   const colorClassName = colorClass(color);
   const sizeClassName = sizeClass(size);
   return `${colorClassName} ${sizeClassName} ${className ? className : ''}`;

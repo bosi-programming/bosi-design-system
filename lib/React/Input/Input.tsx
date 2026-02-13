@@ -1,22 +1,5 @@
+import { inputDarkClasses, inputErrorClasses, inputTextErrorClasses, type InputProps } from '../../globals';
 import { Typography } from '../Typography';
-
-export interface InputProps {
-  name: string;
-  value: string;
-  setValue: (val: string) => void;
-  label?: string;
-  placeholder?: string;
-  className?: string;
-  type?: HTMLInputElement['type'];
-  disabled?: boolean;
-  required?: boolean;
-  error?: string;
-}
-
-const darkClasses =
-  'dark:border-emerald dark:placeholder:text-gray-400 dark:focus:ring-emerald dark:focus:border-emerald dark:bg-green dark:text-white';
-const inputErrorClasses = 'dark:border-red-400 border-red-700';
-const textErrorClasses = 'mt-1 text-red-700 dark:text-red-400';
 
 export function Input({
   name,
@@ -41,7 +24,7 @@ export function Input({
       <input
         required={required}
         id={name}
-        className={`w-full rounded-xl border border-gray-300 bg-gray-50 px-2 py-3 text-gray-900 placeholder:text-gray-500 focus:border-blue-500 focus:ring-blue-500 ${darkClasses} ${error ? inputErrorClasses : null}`}
+        className={`w-full rounded-xl border border-gray-300 bg-gray-50 px-2 py-3 text-gray-900 placeholder:text-gray-500 focus:border-blue-500 focus:ring-blue-500 ${inputDarkClasses} ${error ? inputErrorClasses : null}`}
         placeholder={placeholder}
         value={value}
         onChange={(e) => setValue(e.target.value)}
@@ -53,7 +36,7 @@ export function Input({
         aria-describedby={label ? `label-${name}` : undefined}
       />
       {error ? (
-        <Typography size="details" as="p" id={`error-${name}`} className={`ml-2 ${textErrorClasses}`}>
+        <Typography size="details" as="p" id={`error-${name}`} className={`ml-2 ${inputTextErrorClasses}`}>
           {error}
         </Typography>
       ) : null}
