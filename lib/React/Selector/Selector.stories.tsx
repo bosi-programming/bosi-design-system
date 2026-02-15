@@ -19,7 +19,9 @@ export function SelectorStory({ error }: { error?: string }) {
       name="test-input"
       value={value}
       onChange={(e) => handleChange(e.target.value)}
-      labelChildren="Label"
+      label="Label"
+      placeholder="Placeholder"
+      error={error}
       options={[
         {
           id: 'default',
@@ -36,9 +38,9 @@ export function SelectorStory({ error }: { error?: string }) {
 
 type Story = StoryObj<typeof Selector>;
 
-// export const ErrorSelector: Story = {
-//   render: SelectorStory,
-//   args: {
-//     error: 'Error message',
-//   },
-// };
+export const ErrorSelector: Story = {
+  render: SelectorStory,
+  args: {
+    error: 'Error message',
+  },
+};

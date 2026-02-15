@@ -1,4 +1,10 @@
-import { inputDarkClasses, inputErrorClasses, inputTextErrorClasses, type InputProps } from '../../globals';
+import {
+  inputDarkClasses,
+  inputErrorClasses,
+  placeholderStyles,
+  textErrorClasses,
+  type InputProps,
+} from '../../globals';
 import { Typography } from '../Typography';
 
 export function Input({
@@ -16,7 +22,7 @@ export function Input({
   return (
     <div className={`flex w-full flex-col ${className}`}>
       {label ? (
-        <Typography as="label" id={`label-${name}`} htmlFor={name} className="ml-2">
+        <Typography as="label" id={`label-${name}`} htmlFor={name} className="mb-2! ml-2">
           {label}
           {required ? '*' : null}
         </Typography>
@@ -24,7 +30,7 @@ export function Input({
       <input
         required={required}
         id={name}
-        className={`w-full rounded-xl border border-gray-300 bg-gray-50 px-2 py-3 text-gray-900 placeholder:text-gray-500 focus:border-blue-500 focus:ring-blue-500 ${inputDarkClasses} ${error ? inputErrorClasses : null}`}
+        className={`w-full rounded-xl border border-gray-300 bg-gray-50 px-2 py-3 text-gray-900 placeholder:text-gray-500 focus:border-blue-500 focus:ring-blue-500 ${placeholderStyles} ${inputDarkClasses} ${error ? inputErrorClasses : null}`}
         placeholder={placeholder}
         value={value}
         onChange={(e) => setValue(e.target.value)}
@@ -36,7 +42,7 @@ export function Input({
         aria-describedby={label ? `label-${name}` : undefined}
       />
       {error ? (
-        <Typography size="details" as="p" id={`error-${name}`} className={`ml-2 ${inputTextErrorClasses}`}>
+        <Typography size="details" as="p" id={`error-${name}`} className={`ml-2 ${textErrorClasses}`}>
           {error}
         </Typography>
       ) : null}

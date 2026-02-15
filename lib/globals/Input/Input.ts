@@ -12,6 +12,5 @@ export interface InputProps {
 }
 
 export const inputDarkClasses =
-  'dark:border-emerald dark:placeholder:text-gray-400 dark:focus:ring-emerald dark:focus:border-emerald dark:bg-green dark:text-white';
+  'dark:border-emerald dark:focus:ring-emerald dark:focus:border-emerald dark:bg-green dark:text-white';
 export const inputErrorClasses = 'dark:border-red-400 border-red-700';
-export const inputTextErrorClasses = 'mt-1 text-red-700 dark:text-red-400';
