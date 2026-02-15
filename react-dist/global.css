@@ -316,8 +316,28 @@
 @layer components;
 
 @layer utilities {
+  .pointer-events-none {
+    pointer-events: none;
+  }
+
+  .absolute {
+    position: absolute;
+  }
+
+  .relative {
+    position: relative;
+  }
+
   .static {
     position: static;
+  }
+
+  .top-3\.5 {
+    top: calc(var(--spacing) * 3.5);
+  }
+
+  .right-2\.5 {
+    right: calc(var(--spacing) * 2.5);
   }
 
   .container {
@@ -362,8 +382,16 @@
     margin-top: calc(var(--spacing) * 2);
   }
 
+  .mb-2\! {
+    margin-bottom: calc(var(--spacing) * 2) !important;
+  }
+
   .mb-4 {
     margin-bottom: calc(var(--spacing) * 4);
+  }
+
+  .ml-1 {
+    margin-left: calc(var(--spacing) * 1);
   }
 
   .ml-2 {
@@ -378,8 +406,16 @@
     display: flex;
   }
 
+  .h-5 {
+    height: calc(var(--spacing) * 5);
+  }
+
   .h-\[365px\] {
     height: 365px;
+  }
+
+  .w-5 {
+    width: calc(var(--spacing) * 5);
   }
 
   .w-full {
@@ -388,6 +424,10 @@
 
   .cursor-pointer {
     cursor: pointer;
+  }
+
+  .appearance-none {
+    appearance: none;
   }
 
   .flex-col {
@@ -525,6 +565,10 @@
     font-weight: var(--font-weight-bold);
   }
 
+  .text-gray-500 {
+    color: var(--color-gray-500);
+  }
+
   .text-gray-900 {
     color: var(--color-gray-900);
   }
@@ -547,6 +591,11 @@
 
   .outline-transparent {
     outline-color: #0000;
+  }
+
+  .outline-none {
+    --tw-outline-style: none;
+    outline-style: none;
   }
 
   .placeholder\:text-gray-500::placeholder {
@@ -584,6 +633,10 @@
   }
 
   @media (min-width: 48rem) {
+    .md\:mb-6 {
+      margin-bottom: calc(var(--spacing) * 6);
+    }
+
     .md\:w-\[270px\] {
       width: 270px;
     }
@@ -625,6 +678,14 @@
     color: var(--color-gray-93);
   }
 
+  .dark\:text-gray-400:where(.dark, .dark *) {
+    color: var(--color-gray-400);
+  }
+
+  .dark\:text-gray-400\!:where(.dark, .dark *) {
+    color: var(--color-gray-400) !important;
+  }
+
   .dark\:text-primary-on-dark:where(.dark, .dark *) {
     color: var(--color-primary-on-dark);
   }
@@ -641,8 +702,12 @@
     color: var(--color-white);
   }
 
-  .dark\:placeholder\:text-gray-400:where(.dark, .dark *)::placeholder {
-    color: var(--color-gray-400);
+  .dark\:placeholder-emerald:where(.dark, .dark *)::placeholder {
+    color: var(--color-emerald);
+  }
+
+  .dark\:placeholder\:text-gray-400\!:where(.dark, .dark *)::placeholder {
+    color: var(--color-gray-400) !important;
   }
 
   .dark\:focus\:border-emerald:where(.dark, .dark *):focus {

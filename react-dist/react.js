@@ -1,6 +1,6 @@
 /* empty css       */
 import { jsx, jsxs } from 'react/jsx-runtime';
-import 'react';
+import { useState } from 'react';
 
 const baseButtonClasses = "hover:scale-110 rounded-lg cursor-pointer border-none outline-transparent text-body hover:brightness-75 disabled:cursor-not-allowed disabled:bg-gray-15";
 const actionClasses = {
@@ -28,16 +28,14 @@ function getColorClass(action, color) {
 function getSizeClass(size) {
   return z(size).with("small", () => sizeClasses.small).with("medium", () => sizeClasses.medium).with("full-width", () => sizeClasses["full-width"]).with(void 0, () => sizeClasses.medium).exhaustive();
 }
-function getFinalClassName$1(action, color, size, className) {
+function getButtonFinalClassName(action, color, size, className) {
   const colorClass = getColorClass(action, color);
   const sizeClass = getSizeClass(size);
   return `${baseButtonClasses} ${colorClass} ${sizeClass} ${className || ""}`.trim();
 }
 
-const Button = ({ children, className, color = "default", size = "medium", action, ...props }) => {
-  const buttonClasses = getFinalClassName$1(action, color, size, className);
-  return /* @__PURE__ */ jsx("button", { className: buttonClasses, ...props, children });
-};
+const inputDarkClasses = "dark:border-emerald dark:focus:ring-emerald dark:focus:border-emerald dark:bg-green dark:text-white";
+const inputErrorClasses = "dark:border-red-400 border-red-700";
 
 function colorClass(color) {
   return z(color).with("primary", () => "text-primary-on-light dark:text-primary-on-dark").with("secondary", () => "text-secondary-on-light dark:text-secondary-on-dark").with("error", "default", void 0, () => "light:text-black dark:text-gray-93").exhaustive();
@@ -45,7 +43,7 @@ function colorClass(color) {
 function sizeClass(size) {
   return z(size).with("h1", () => "text-h1 font-bold").with("h2", () => "text-h2 font-bold").with("h3", () => "text-h3 font-bold").with("h4", () => "text-h4 font-bold").with("details", () => "text-details").with("body", void 0, () => "text-body mb-4").exhaustive();
 }
-function getFinalClassName(color, size, className) {
+function getTypographyFinalClassName(color, size, className) {
   const colorClassName = colorClass(color);
   const sizeClassName = sizeClass(size);
   return `${colorClassName} ${sizeClassName} ${className ? className : ""}`;
@@ -55,6 +53,19 @@ function getComponent(size, as) {
   if (size === "body") return "p";
   return size || "p";
 }
+
+const fakePlaceholderStyles = "dark:text-gray-400! text-gray-500";
+const placeholderStyles = "dark:placeholder:text-gray-400! placeholder:text-gray-500";
+const textErrorClasses = "mt-1 text-red-700 dark:text-red-400";
+
+const selectorIconStyles = "pointer-events-none absolute right-2.5 top-3.5 ml-1 h-5 w-5 text-gray-500 dark:text-gray-400";
+const selectorBaseClasses = "rounded-xl border border-gray-300 bg-gray-50 px-2 py-3 text-gray-900 outline-none focus:border-blue-500 focus:ring-blue-500 md:mb-6 appearance-none cursor-pointer w-full";
+const selectorDarkClasses = "dark:bg-green dark:border-emerald dark:placeholder-emerald dark:text-white dark:focus:ring-emerald dark:focus:border-emerald";
+
+const Button = ({ children, className, color = "default", size = "medium", action, ...props }) => {
+  const buttonClasses = getButtonFinalClassName(action, color, size, className);
+  return /* @__PURE__ */ jsx("button", { className: buttonClasses, ...props, children });
+};
 
 function Typography({
   color = "default",
@@ -68,7 +79,7 @@ function Typography({
   htmlFor,
   id
 }) {
-  const finalClassName = getFinalClassName(color, size, className);
+  const finalClassName = getTypographyFinalClassName(color, size, className);
   const Component = getComponent(size, as);
   if (Component === "a") {
     return /* @__PURE__ */ jsx(Component, { id, className: finalClassName, href, target, rel, children });
@@ -105,4 +116,99 @@ function Card({ title, content, actions, className }) {
   );
 }
 
-export { Button, Card, Paper, Typography, getComponent, getFinalClassName };
+function Input({
+  name,
+  disabled,
+  required,
+  value,
+  setValue,
+  label,
+  placeholder,
+  className,
+  type = "text",
+  error
+}) {
+  return /* @__PURE__ */ jsxs("div", { className: `flex w-full flex-col ${className}`, children: [
+    label ? /* @__PURE__ */ jsxs(Typography, { as: "label", id: `label-${name}`, htmlFor: name, className: "mb-2! ml-2", children: [
+      label,
+      required ? "*" : null
+    ] }) : null,
+    /* @__PURE__ */ jsx(
+      "input",
+      {
+        required,
+        id: name,
+        className: `w-full rounded-xl border border-gray-300 bg-gray-50 px-2 py-3 text-gray-900 placeholder:text-gray-500 focus:border-blue-500 focus:ring-blue-500 ${placeholderStyles} ${inputDarkClasses} ${error ? inputErrorClasses : null}`,
+        placeholder,
+        value,
+        onChange: (e) => setValue(e.target.value),
+        name,
+        type,
+        disabled,
+        "aria-invalid": !!error,
+        "aria-errormessage": error ? `error-${name}` : void 0,
+        "aria-describedby": label ? `label-${name}` : void 0
+      }
+    ),
+    error ? /* @__PURE__ */ jsx(Typography, { size: "details", as: "p", id: `error-${name}`, className: `ml-2 ${textErrorClasses}`, children: error }) : null
+  ] });
+}
+
+function Selector({
+  placeholder,
+  options,
+  label,
+  name,
+  required,
+  disabled,
+  error,
+  className,
+  ...rest
+}) {
+  const [clicked, setClicked] = useState(false);
+  return /* @__PURE__ */ jsxs("div", { className: `flex w-full flex-col ${className}`, children: [
+    label ? /* @__PURE__ */ jsxs(Typography, { as: "label", id: `label-${name}`, htmlFor: name, className: "mb-2! ml-2", children: [
+      label,
+      required ? "*" : null
+    ] }) : null,
+    /* @__PURE__ */ jsxs("div", { className: "relative", onMouseEnter: () => setClicked(!clicked), onMouseLeave: () => setClicked(!clicked), children: [
+      /* @__PURE__ */ jsxs(
+        "select",
+        {
+          ...rest,
+          name,
+          id: name,
+          required,
+          className: `${selectorBaseClasses} ${selectorDarkClasses} ${!rest.value && !clicked ? fakePlaceholderStyles : ""}`,
+          disabled,
+          "aria-label": label,
+          "aria-invalid": !!error,
+          "aria-errormessage": error ? `error-${name}` : void 0,
+          "aria-describedby": label ? `label-${name}` : void 0,
+          children: [
+            /* @__PURE__ */ jsx("option", { value: "", disabled: true, children: placeholder }),
+            options.map(({ id, label: label2 }) => {
+              if (id === "") return null;
+              return /* @__PURE__ */ jsx("option", { value: id, children: label2 }, id);
+            })
+          ]
+        }
+      ),
+      /* @__PURE__ */ jsx(
+        "svg",
+        {
+          xmlns: "http://www.w3.org/2000/svg",
+          fill: "none",
+          viewBox: "0 0 24 24",
+          strokeWidth: "1.2",
+          stroke: "currentColor",
+          className: selectorIconStyles,
+          children: /* @__PURE__ */ jsx("path", { strokeLinecap: "round", strokeLinejoin: "round", d: "M8.25 15 12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" })
+        }
+      )
+    ] }),
+    error ? /* @__PURE__ */ jsx(Typography, { size: "details", as: "p", id: `error-${name}`, className: `ml-2 ${textErrorClasses}`, children: error }) : null
+  ] });
+}
+
+export { Button, Card, Input, Paper, Selector, Typography, actionClasses, baseButtonClasses, colorsClasses, fakePlaceholderStyles, getButtonFinalClassName, getComponent, getTypographyFinalClassName, inputDarkClasses, inputErrorClasses, placeholderStyles, selectorBaseClasses, selectorDarkClasses, selectorIconStyles, sizeClasses, textErrorClasses };

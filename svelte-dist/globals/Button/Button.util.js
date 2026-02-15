@@ -18,7 +18,7 @@ function getSizeClass(size) {
         .with(undefined, () => sizeClasses.medium)
         .exhaustive();
 }
-export function getFinalClassName(action, color, size, className) {
+export function getButtonFinalClassName(action, color, size, className) {
     const colorClass = getColorClass(action, color);
     const sizeClass = getSizeClass(size);
     return `${baseButtonClasses} ${colorClass} ${sizeClass} ${className || ''}`.trim();

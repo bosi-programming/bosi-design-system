@@ -1,7 +1,7 @@
 export type ButtonColor = 'default' | 'primary' | 'secondary';
 export type ButtonSize = 'small' | 'medium' | 'full-width';
 export type ButtonAction = 'error' | 'warning' | 'success' | 'info';
-export interface ButtonProps {
+export interface ButtonBaseProps {
     className?: string;
     color?: ButtonColor;
     size?: ButtonSize;

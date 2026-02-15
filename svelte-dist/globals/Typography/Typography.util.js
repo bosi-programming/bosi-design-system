@@ -16,7 +16,7 @@ function sizeClass(size) {
         .with('body', undefined, () => 'text-body mb-4')
         .exhaustive();
 }
-export function getFinalClassName(color, size, className) {
+export function getTypographyFinalClassName(color, size, className) {
     const colorClassName = colorClass(color);
     const sizeClassName = sizeClass(size);
     return `${colorClassName} ${sizeClassName} ${className ? className : ''}`;
