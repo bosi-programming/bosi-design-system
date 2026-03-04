@@ -4,3 +4,4 @@ export * from './Card';
 export * from './Paper';
 export * from './Input';
 export * from './Selector';
+export * from './Icons';
