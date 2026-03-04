@@ -5,6 +5,13 @@ export declare const actionClasses: Record<ButtonAction, string>;
 
 export declare const baseButtonClasses = "hover:scale-110 rounded-lg cursor-pointer border-none outline-transparent text-body hover:brightness-75 disabled:cursor-not-allowed disabled:bg-gray-15";
 
+export declare function BrasilFlag({ className, size }: BrasilFlagProps): JSX.Element;
+
+export declare interface BrasilFlagProps {
+    className?: string;
+    size?: string;
+}
+
 export declare const Button: ({ children, className, color, size, action, ...props }: ButtonProps) => JSX.Element;
 
 export declare type ButtonAction = 'error' | 'warning' | 'success' | 'info';
@@ -43,6 +50,13 @@ export declare function getComponent(size: TypographyProps['size'], as: Typograp
 
 export declare function getTypographyFinalClassName(color: TypographyProps['color'], size: TypographyProps['size'], className?: string): string;
 
+export declare function Github({ className, size }: GithubProps): JSX.Element;
+
+export declare interface GithubProps {
+    className?: string;
+    size?: string;
+}
+
 export declare function Input({ name, disabled, required, value, setValue, label, placeholder, className, type, error, }: InputProps): JSX.Element;
 
 export declare const inputDarkClasses = "dark:border-emerald dark:focus:ring-emerald dark:focus:border-emerald dark:bg-green dark:text-white";
@@ -60,6 +74,20 @@ export declare interface InputProps {
     disabled?: boolean;
     required?: boolean;
     error?: string;
+}
+
+export declare function Instagram({ className, size }: InstagramProps): JSX.Element;
+
+export declare interface InstagramProps {
+    className?: string;
+    size?: string;
+}
+
+export declare function Linkedin({ className, size }: LinkedinProps): JSX.Element;
+
+export declare interface LinkedinProps {
+    className?: string;
+    size?: string;
 }
 
 export declare function Paper({ children, className, isCard, ...rest }: PaperProps): JSX.Element;
@@ -115,6 +143,13 @@ export declare interface TypographyProps {
 
 declare interface TypographyProps_2 extends TypographyProps {
     children: ReactNode;
+}
+
+export declare function USAFlag({ className, size }: USAFlagProps): JSX.Element;
+
+export declare interface USAFlagProps {
+    className?: string;
+    size?: string;
 }
 
 export { }
