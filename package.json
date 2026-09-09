@@ -1,6 +1,6 @@
 {
   "name": "bosi-design-system",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "Bosi Design System for React and Svelte",
   "author": "Felipe Azevedo Bosi",
   "license": "GPLv3",
@@ -42,7 +42,7 @@
     "build:svelte": "svelte-package -i ./lib -o ./svelte-dist && rm -rf ./svelte-dist/React ./svelte-dist/react.*",
     "lint": "prettier --check . && eslint . --report-unused-disable-directives --max-warnings 0",
     "format": "prettier . --write --ignore-unknown",
-    "prepare": "husky install"
+    "git-prepare": "husky install"
   },
   "devDependencies": {
     "@eslint/compat": "^1.2.3",
