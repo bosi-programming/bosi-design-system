@@ -30,7 +30,7 @@
         "default": "./svelte-dist/svelte.js"
       }
     },
-    "./css": "./dist/global.css"
+    "./css": "./react-dist/global.css"
   },
   "scripts": {
     "dev": "storybook dev -p 6006",
