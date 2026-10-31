@@ -34,8 +34,9 @@ function getButtonFinalClassName(action, color, size, className) {
   return `${baseButtonClasses} ${colorClass} ${sizeClass} ${className || ""}`.trim();
 }
 
-const inputDarkClasses = "dark:border-emerald dark:focus:ring-emerald dark:focus:border-emerald dark:bg-green dark:text-white";
-const inputErrorClasses = "dark:border-red-400 border-red-700";
+const inputDarkClasses = "dark:focus:ring-emerald dark:focus:border-emerald dark:bg-green dark:text-white";
+const inputBorderClasses = "border-gray-68 dark:border-emerald";
+const inputErrorClasses = "border-error dark:border-red-400";
 
 function colorClass(color) {
   return z(color).with("primary", () => "text-primary-on-light dark:text-primary-on-dark").with("secondary", () => "text-secondary-on-light dark:text-secondary-on-dark").with("error", "default", void 0, () => "light:text-black dark:text-gray-93").exhaustive();
@@ -54,13 +55,13 @@ function getComponent(size, as) {
   return size || "p";
 }
 
-const fakePlaceholderStyles = "dark:text-gray-400! text-gray-500";
-const placeholderStyles = "dark:placeholder:text-gray-400! placeholder:text-gray-500";
-const textErrorClasses = "mt-1 text-red-700 dark:text-red-400";
+const fakePlaceholderStyles = "dark:text-gray-400! text-gray-68!";
+const placeholderStyles = "dark:placeholder:text-gray-400! placeholder:text-gray-68";
+const textErrorClasses = "mt-2 text-error dark:text-red-400";
 
-const selectorIconStyles = "pointer-events-none absolute right-2.5 top-3.5 ml-1 h-5 w-5 text-gray-500 dark:text-gray-400";
-const selectorBaseClasses = "rounded-xl border border-gray-300 bg-gray-50 px-2 py-3 text-gray-900 outline-none focus:border-blue-500 focus:ring-blue-500 md:mb-6 appearance-none cursor-pointer w-full";
-const selectorDarkClasses = "dark:bg-green dark:border-emerald dark:placeholder-emerald dark:text-white dark:focus:ring-emerald dark:focus:border-emerald";
+const selectorIconStyles = "pointer-events-none absolute right-2.5 top-3 h-5 w-5 text-black dark:text-gray-400";
+const selectorBaseClasses = "h-11 rounded-xl border bg-white pl-2 pr-9 text-black outline-none focus:border-blue-500 focus:ring-blue-500 appearance-none cursor-pointer w-full";
+const selectorDarkClasses = "dark:bg-green dark:placeholder-emerald dark:text-white dark:focus:ring-emerald dark:focus:border-emerald";
 
 const Button = ({ children, className, color = "default", size = "medium", action, ...props }) => {
   const buttonClasses = getButtonFinalClassName(action, color, size, className);
@@ -429,7 +430,7 @@ function Input({
   error
 }) {
   return /* @__PURE__ */ jsxs("div", { className: `flex w-full flex-col ${className}`, children: [
-    label ? /* @__PURE__ */ jsxs(Typography, { as: "label", id: `label-${name}`, htmlFor: name, className: "mb-2! ml-2", children: [
+    label ? /* @__PURE__ */ jsxs(Typography, { as: "label", id: `label-${name}`, htmlFor: name, className: "mb-2!", children: [
       label,
       required ? "*" : null
     ] }) : null,
@@ -438,7 +439,7 @@ function Input({
       {
         required,
         id: name,
-        className: `w-full rounded-xl border border-gray-300 bg-gray-50 px-2 py-3 text-gray-900 placeholder:text-gray-500 focus:border-blue-500 focus:ring-blue-500 ${placeholderStyles} ${inputDarkClasses} ${error ? inputErrorClasses : null}`,
+        className: `h-11 w-full rounded-xl border bg-white px-2 text-black focus:border-blue-500 focus:ring-blue-500 ${placeholderStyles} ${inputDarkClasses} ${error ? inputErrorClasses : inputBorderClasses}`,
         placeholder,
         value,
         onChange: (e) => setValue(e.target.value),
@@ -450,7 +451,7 @@ function Input({
         "aria-describedby": label ? `label-${name}` : void 0
       }
     ),
-    error ? /* @__PURE__ */ jsx(Typography, { size: "details", as: "p", id: `error-${name}`, className: `ml-2 ${textErrorClasses}`, children: error }) : null
+    error ? /* @__PURE__ */ jsx(Typography, { size: "details", as: "p", id: `error-${name}`, className: textErrorClasses, children: error }) : null
   ] });
 }
 
@@ -467,7 +468,7 @@ function Selector({
 }) {
   const [clicked, setClicked] = useState(false);
   return /* @__PURE__ */ jsxs("div", { className: `flex w-full flex-col ${className}`, children: [
-    label ? /* @__PURE__ */ jsxs(Typography, { as: "label", id: `label-${name}`, htmlFor: name, className: "mb-2! ml-2", children: [
+    label ? /* @__PURE__ */ jsxs(Typography, { as: "label", id: `label-${name}`, htmlFor: name, className: "mb-2!", children: [
       label,
       required ? "*" : null
     ] }) : null,
@@ -479,7 +480,7 @@ function Selector({
           name,
           id: name,
           required,
-          className: `${selectorBaseClasses} ${selectorDarkClasses} ${!rest.value && !clicked ? fakePlaceholderStyles : ""}`,
+          className: `${selectorBaseClasses} ${selectorDarkClasses} ${error ? inputErrorClasses : inputBorderClasses} ${!rest.value && !clicked ? fakePlaceholderStyles : ""}`,
           disabled,
           "aria-label": label,
           "aria-invalid": !!error,
@@ -503,12 +504,12 @@ function Selector({
           strokeWidth: "1.2",
           stroke: "currentColor",
           className: selectorIconStyles,
-          children: /* @__PURE__ */ jsx("path", { strokeLinecap: "round", strokeLinejoin: "round", d: "M8.25 15 12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" })
+          children: /* @__PURE__ */ jsx("path", { strokeLinecap: "round", strokeLinejoin: "round", d: "m19.5 8.25-7.5 7.5-7.5-7.5" })
         }
       )
     ] }),
-    error ? /* @__PURE__ */ jsx(Typography, { size: "details", as: "p", id: `error-${name}`, className: `ml-2 ${textErrorClasses}`, children: error }) : null
+    error ? /* @__PURE__ */ jsx(Typography, { size: "details", as: "p", id: `error-${name}`, className: textErrorClasses, children: error }) : null
   ] });
 }
 
-export { BrasilFlag, Button, BuyMeACoffee, Card, Github, Input, Instagram, Linkedin, Paper, Selector, Typography, USAFlag, actionClasses, baseButtonClasses, colorsClasses, fakePlaceholderStyles, getButtonFinalClassName, getComponent, getTypographyFinalClassName, inputDarkClasses, inputErrorClasses, placeholderStyles, selectorBaseClasses, selectorDarkClasses, selectorIconStyles, sizeClasses, textErrorClasses };
+export { BrasilFlag, Button, BuyMeACoffee, Card, Github, Input, Instagram, Linkedin, Paper, Selector, Typography, USAFlag, actionClasses, baseButtonClasses, colorsClasses, fakePlaceholderStyles, getButtonFinalClassName, getComponent, getTypographyFinalClassName, inputBorderClasses, inputDarkClasses, inputErrorClasses, placeholderStyles, selectorBaseClasses, selectorDarkClasses, selectorIconStyles, sizeClasses, textErrorClasses };

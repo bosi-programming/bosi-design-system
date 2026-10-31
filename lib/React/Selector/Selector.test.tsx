@@ -88,3 +88,39 @@ describe('Selector hover styles', () => {
     expect(combobox).not.toHaveClass(fakePlaceholderStyles);
   });
 });
+
+describe('Selector design', () => {
+  it('should render a chevron that points down', () => {
+    const { container } = render(<Selector options={defaultOptions} />);
+    expect(container.querySelector('svg path')).toHaveAttribute('d', 'm19.5 8.25-7.5 7.5-7.5-7.5');
+  });
+  it('should center the chevron in the field', () => {
+    const { container } = render(<Selector options={defaultOptions} />);
+    const icon = container.querySelector('svg');
+    expect(icon).toHaveClass('top-3', 'right-2.5', 'h-5', 'w-5', 'text-black');
+    expect(icon).not.toHaveClass('top-3.5');
+  });
+  it('should use the design field styles', () => {
+    render(<Selector options={defaultOptions} />);
+    const combobox = screen.getByRole('combobox');
+    expect(combobox).toHaveClass('h-11', 'pl-2', 'pr-9', 'bg-white', 'border-gray-68');
+    expect(combobox).not.toHaveClass('md:mb-6');
+  });
+  it('should use the error border instead of the default one when there is an error', () => {
+    render(<Selector options={defaultOptions} name="test" error="Error message" />);
+    const combobox = screen.getByRole('combobox');
+    expect(combobox).toHaveClass('border-error');
+    expect(combobox).not.toHaveClass('border-gray-68');
+  });
+  it('should align label and error with the field and keep the error 8px below it', () => {
+    render(<Selector options={defaultOptions} name="test" label="Label" error="Error message" />);
+    expect(screen.getByText('Label')).not.toHaveClass('ml-2');
+    const error = screen.getByText('Error message');
+    expect(error).not.toHaveClass('ml-2');
+    expect(error).toHaveClass('mt-2', 'text-error');
+  });
+  it('should use the design placeholder color', () => {
+    render(<Selector options={defaultOptions} />);
+    expect(screen.getByRole('combobox')).toHaveClass('text-gray-68!');
+  });
+});

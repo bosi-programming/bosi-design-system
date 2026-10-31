@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import {
   fakePlaceholderStyles,
+  inputBorderClasses,
+  inputErrorClasses,
   selectorBaseClasses,
   selectorDarkClasses,
   selectorIconStyles,
@@ -31,7 +33,7 @@ export function Selector({
   return (
     <div className={`flex w-full flex-col ${className}`}>
       {label ? (
-        <Typography as="label" id={`label-${name}`} htmlFor={name} className="mb-2! ml-2">
+        <Typography as="label" id={`label-${name}`} htmlFor={name} className="mb-2!">
           {label}
           {required ? '*' : null}
         </Typography>
@@ -42,7 +44,7 @@ export function Selector({
           name={name}
           id={name}
           required={required}
-          className={`${selectorBaseClasses} ${selectorDarkClasses} ${!rest.value && !clicked ? fakePlaceholderStyles : ''}`}
+          className={`${selectorBaseClasses} ${selectorDarkClasses} ${error ? inputErrorClasses : inputBorderClasses} ${!rest.value && !clicked ? fakePlaceholderStyles : ''}`}
           disabled={disabled}
           aria-label={label}
           aria-invalid={!!error}
@@ -69,11 +71,11 @@ export function Selector({
           stroke="currentColor"
           className={selectorIconStyles}
         >
-          <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15 12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
+          <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
         </svg>
       </div>
       {error ? (
-        <Typography size="details" as="p" id={`error-${name}`} className={`ml-2 ${textErrorClasses}`}>
+        <Typography size="details" as="p" id={`error-${name}`} className={textErrorClasses}>
           {error}
         </Typography>
       ) : null}

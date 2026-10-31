@@ -10,6 +10,7 @@ export interface InputProps {
     required?: boolean;
     error?: string;
 }
-export declare const inputDarkClasses = "dark:border-emerald dark:focus:ring-emerald dark:focus:border-emerald dark:bg-green dark:text-white";
-export declare const inputErrorClasses = "dark:border-red-400 border-red-700";
+export declare const inputDarkClasses = "dark:focus:ring-emerald dark:focus:border-emerald dark:bg-green dark:text-white";
+export declare const inputBorderClasses = "border-gray-68 dark:border-emerald";
+export declare const inputErrorClasses = "border-error dark:border-red-400";
 //# sourceMappingURL=Input.d.ts.map
