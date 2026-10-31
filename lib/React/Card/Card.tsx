@@ -20,7 +20,7 @@ export function Card({ title, content, actions, className }: CardProps) {
         {title}
       </Typography>
       <div className="mt-2">{content}</div>
-      <div>{actions}</div>
+      <div className="flex w-full justify-center gap-2">{actions}</div>
     </Paper>
   );
 }

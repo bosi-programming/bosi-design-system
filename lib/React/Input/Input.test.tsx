@@ -85,6 +85,37 @@ describe('Input', () => {
     expect(screen.getByRole('textbox')).toHaveClass('dark:placeholder:text-gray-68!', 'placeholder:text-gray-68');
   });
 
+  it('should use the Penpot filled styles', () => {
+    render(<Input name="test" value="" setValue={() => {}} />);
+    expect(screen.getByRole('textbox')).toHaveClass(
+      'bg-white',
+      'border-gray-68',
+      'text-black',
+      'dark:bg-background-on-dark',
+      'dark:border-emerald',
+      'dark:text-white',
+    );
+    expect(screen.getByRole('textbox')).not.toHaveClass('dark:bg-green');
+  });
+
+  it('should use the Penpot disabled styles', () => {
+    render(<Input name="test" value="" setValue={() => {}} label="Label" disabled />);
+    expect(screen.getByRole('textbox')).toHaveClass(
+      'disabled:bg-gray-93',
+      'disabled:border-gray-68',
+      'disabled:text-gray-68',
+      'dark:disabled:bg-nav-background-on-dark',
+      'dark:disabled:border-gray-68',
+      'dark:disabled:text-gray-68',
+    );
+    expect(screen.getByText('Label')).toHaveClass('text-gray-68!', 'dark:text-gray-68!');
+  });
+
+  it('should keep the default label colour when enabled', () => {
+    render(<Input name="test" value="" setValue={() => {}} label="Label" />);
+    expect(screen.getByText('Label')).not.toHaveClass('text-gray-68!');
+  });
+
   it('should align label and error with the field and keep the error 8px below it', () => {
     render(<Input name="test" value="" setValue={() => {}} label="Label" error="Invalid input" />);
     expect(screen.getByText('Label')).not.toHaveClass('ml-2');

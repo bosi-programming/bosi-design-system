@@ -12,6 +12,10 @@ describe('Paper', () => {
     render(<Paper isCard>Content</Paper>);
     expect(screen.getByText('Content')).not.toHaveClass(nonCardClasses);
   });
+  it('should have the Penpot background in both themes', () => {
+    render(<Paper>Content</Paper>);
+    expect(screen.getByText('Content')).toHaveClass('bg-background-on-light', 'dark:bg-background-on-dark');
+  });
   it('should accept className', () => {
     render(<Paper className="test">Content</Paper>);
     expect(screen.getByText('Content')).toHaveClass('test');

@@ -38,7 +38,7 @@ function getButtonFinalClassName(action, color, size, className) {
   return `${baseButtonClasses} ${colorClass} ${sizeClass} ${className || ""}`.trim();
 }
 
-const inputDarkClasses = "dark:bg-green dark:text-white";
+const inputDarkClasses = "dark:bg-background-on-dark dark:text-white";
 const inputBorderClasses = "border-gray-68 dark:border-emerald";
 const inputErrorClasses = "border-error dark:border-error-on-dark";
 
@@ -61,11 +61,20 @@ function getComponent(size, as) {
 
 const fakePlaceholderStyles = "dark:text-gray-68! text-gray-68!";
 const placeholderStyles = "dark:placeholder:text-gray-68! placeholder:text-gray-68";
+const fieldDisabledClasses = "disabled:bg-gray-93 disabled:border-gray-68 disabled:text-gray-68 dark:disabled:bg-nav-background-on-dark dark:disabled:border-gray-68 dark:disabled:text-gray-68";
+const fieldLabelDisabledClasses = "text-gray-68! dark:text-gray-68!";
 const textErrorClasses = "mt-2 text-error dark:text-error-on-dark";
 
-const selectorIconStyles = "pointer-events-none absolute right-2.5 top-3 h-5 w-5 text-black dark:text-gray-68";
-const selectorBaseClasses = "h-11 rounded-xl border bg-white pl-2 pr-9 text-black outline-none focus:border-emerald focus:ring-emerald appearance-none cursor-pointer w-full";
-const selectorDarkClasses = "dark:bg-green dark:placeholder-gray-68 dark:text-white";
+const selectorIconStyles = "pointer-events-none absolute right-2.5 top-2.5 text-black dark:text-gray-68";
+const selectorIconDisabledStyles = "pointer-events-none absolute right-2.5 top-2.5 text-gray-68";
+const selectorBaseClasses = "h-11 rounded-xl border bg-white pl-2 pr-9 text-left text-black outline-none focus:border-emerald focus:ring-emerald focus-visible:ring-1 cursor-pointer w-full disabled:cursor-not-allowed";
+const selectorDarkClasses = "dark:bg-background-on-dark dark:text-white";
+const selectorOpenBorderClasses = "border-emerald dark:border-emerald";
+const selectorMenuClasses = "absolute left-0 top-full z-10 mt-2 w-full rounded-xl border border-gray-68 bg-white py-1 dark:border-emerald dark:bg-background-on-dark";
+const selectorOptionClasses = "flex h-10 cursor-pointer items-center px-2 text-black dark:text-white";
+const selectorOptionSelectedClasses = "bg-gray-93 dark:bg-nav-background-on-dark";
+const selectorOptionActiveClasses = "ring-1 ring-inset ring-emerald";
+const selectorAddNewClasses = "flex h-10 cursor-pointer items-center px-2 text-primary-on-light dark:text-primary-on-dark";
 
 const Button = ({ children, className, color = "default", size = "medium", action, ...props }) => {
   const buttonClasses = getButtonFinalClassName(action, color, size, className);
@@ -114,7 +123,7 @@ function Paper({ children, className, isCard, ...rest }) {
   return /* @__PURE__ */ jsxRuntime.jsx(
     "div",
     {
-      className: `shadow-paper dark:shadow-paper-dark border border-black dark:border-white ${className ? className : ""} ${isCard ? "" : nonCardClasses}`,
+      className: `bg-background-on-light dark:bg-background-on-dark shadow-paper dark:shadow-paper-dark border border-black dark:border-white ${className ? className : ""} ${isCard ? "" : nonCardClasses}`,
       ...rest,
       children
     }
@@ -131,7 +140,7 @@ function Card({ title, content, actions, className }) {
       children: [
         /* @__PURE__ */ jsxRuntime.jsx(Typography, { color: "primary", size: "h3", children: title }),
         /* @__PURE__ */ jsxRuntime.jsx("div", { className: "mt-2", children: content }),
-        /* @__PURE__ */ jsxRuntime.jsx("div", { children: actions })
+        /* @__PURE__ */ jsxRuntime.jsx("div", { className: "flex w-full justify-center gap-2", children: actions })
       ]
     }
   );
@@ -421,6 +430,27 @@ function BrasilFlag({ className, size }) {
   );
 }
 
+function ChevronDown({ className, size }) {
+  const finalSize = size || "24px";
+  return /* @__PURE__ */ jsxRuntime.jsx(
+    "svg",
+    {
+      className,
+      height: finalSize,
+      width: finalSize,
+      viewBox: "0 0 24 24",
+      fill: "none",
+      stroke: "currentColor",
+      strokeWidth: "1.5",
+      strokeLinecap: "round",
+      strokeLinejoin: "round",
+      "aria-hidden": "true",
+      xmlns: "http://www.w3.org/2000/svg",
+      children: /* @__PURE__ */ jsxRuntime.jsx("path", { d: "m19.5 8.25-7.5 7.5-7.5-7.5" })
+    }
+  );
+}
+
 function Input({
   name,
   disabled,
@@ -434,16 +464,25 @@ function Input({
   error
 }) {
   return /* @__PURE__ */ jsxRuntime.jsxs("div", { className: `flex w-full flex-col ${className}`, children: [
-    label ? /* @__PURE__ */ jsxRuntime.jsxs(Typography, { as: "label", id: `label-${name}`, htmlFor: name, className: "mb-2!", children: [
-      label,
-      required ? "*" : null
-    ] }) : null,
+    label ? /* @__PURE__ */ jsxRuntime.jsxs(
+      Typography,
+      {
+        as: "label",
+        id: `label-${name}`,
+        htmlFor: name,
+        className: `mb-2! ${disabled ? fieldLabelDisabledClasses : ""}`,
+        children: [
+          label,
+          required ? "*" : null
+        ]
+      }
+    ) : null,
     /* @__PURE__ */ jsxRuntime.jsx(
       "input",
       {
         required,
         id: name,
-        className: `focus:border-emerald focus:ring-emerald h-11 w-full rounded-xl border bg-white px-2 text-black ${placeholderStyles} ${inputDarkClasses} ${error ? inputErrorClasses : inputBorderClasses}`,
+        className: `focus:border-emerald focus:ring-emerald h-11 w-full rounded-xl border bg-white px-2 text-black ${placeholderStyles} ${inputDarkClasses} ${error ? inputErrorClasses : inputBorderClasses} ${fieldDisabledClasses}`,
         placeholder,
         value,
         onChange: (e) => setValue(e.target.value),
@@ -468,49 +507,163 @@ function Selector({
   disabled,
   error,
   className,
+  value,
+  defaultValue,
+  onChange,
+  onAddNew,
+  addNewLabel = "+ Add new",
+  onClick,
+  onKeyDown,
   ...rest
 }) {
-  const [clicked, setClicked] = react.useState(false);
-  return /* @__PURE__ */ jsxRuntime.jsxs("div", { className: `flex w-full flex-col ${className}`, children: [
-    label ? /* @__PURE__ */ jsxRuntime.jsxs(Typography, { as: "label", id: `label-${name}`, htmlFor: name, className: "mb-2!", children: [
-      label,
-      required ? "*" : null
-    ] }) : null,
-    /* @__PURE__ */ jsxRuntime.jsxs("div", { className: "relative", onMouseEnter: () => setClicked(!clicked), onMouseLeave: () => setClicked(!clicked), children: [
-      /* @__PURE__ */ jsxRuntime.jsxs(
-        "select",
+  const generatedId = react.useId();
+  const fieldId = name ?? generatedId;
+  const listboxId = `${fieldId}-listbox`;
+  const rootRef = react.useRef(null);
+  const [innerValue, setInnerValue] = react.useState(String(defaultValue ?? ""));
+  const [open, setOpen] = react.useState(false);
+  const [activeIndex, setActiveIndex] = react.useState(0);
+  const currentValue = String(value ?? innerValue);
+  const items = options.filter(({ id }) => id !== "");
+  const selectedIndex = items.findIndex(({ id }) => String(id) === currentValue);
+  const selected = items[selectedIndex];
+  const addNewIndex = onAddNew ? items.length : -1;
+  const rowCount = items.length + (onAddNew ? 1 : 0);
+  react.useEffect(() => {
+    if (!open) return;
+    const closeOnOutsideClick = (event) => {
+      if (!rootRef.current?.contains(event.target)) setOpen(false);
+    };
+    document.addEventListener("mousedown", closeOnOutsideClick);
+    return () => document.removeEventListener("mousedown", closeOnOutsideClick);
+  }, [open]);
+  const openMenu = () => {
+    setActiveIndex(selectedIndex >= 0 ? selectedIndex : 0);
+    setOpen(true);
+  };
+  const chooseOption = (index) => {
+    const item = items[index];
+    if (!item) return;
+    const nextValue = String(item.id);
+    if (nextValue === currentValue) return;
+    setInnerValue(nextValue);
+    onChange?.({ target: { name, value: nextValue } });
+  };
+  const commitRow = (index) => {
+    if (index === addNewIndex) onAddNew?.();
+    else chooseOption(index);
+    setOpen(false);
+  };
+  const handleKeyDown = (event) => {
+    onKeyDown?.(event);
+    if (!open) {
+      if (["ArrowDown", "ArrowUp", "Enter", " "].includes(event.key)) {
+        event.preventDefault();
+        openMenu();
+      }
+      return;
+    }
+    if (event.key === "Tab") {
+      if (activeIndex !== addNewIndex) chooseOption(activeIndex);
+      setOpen(false);
+      return;
+    }
+    if (event.key === "ArrowDown") setActiveIndex((activeIndex + 1) % rowCount);
+    else if (event.key === "ArrowUp") setActiveIndex((activeIndex - 1 + rowCount) % rowCount);
+    else if (event.key === "Enter" || event.key === " ") commitRow(activeIndex);
+    else if (event.key === "Escape") setOpen(false);
+    else return;
+    event.preventDefault();
+  };
+  const rowId = (index) => `${fieldId}-option-${index}`;
+  const openOrDefaultBorder = open ? selectorOpenBorderClasses : inputBorderClasses;
+  return /* @__PURE__ */ jsxRuntime.jsxs("div", { className: `flex w-full flex-col ${className ?? ""}`, ref: rootRef, children: [
+    label ? /* @__PURE__ */ jsxRuntime.jsxs(
+      Typography,
+      {
+        as: "label",
+        id: `label-${name}`,
+        htmlFor: fieldId,
+        className: `mb-2! ${disabled ? fieldLabelDisabledClasses : ""}`,
+        children: [
+          label,
+          required ? "*" : null
+        ]
+      }
+    ) : null,
+    /* @__PURE__ */ jsxRuntime.jsxs("div", { className: "relative", children: [
+      /* @__PURE__ */ jsxRuntime.jsx(
+        "button",
         {
           ...rest,
-          name,
-          id: name,
-          required,
-          className: `${selectorBaseClasses} ${selectorDarkClasses} ${error ? inputErrorClasses : inputBorderClasses} ${!rest.value && !clicked ? fakePlaceholderStyles : ""}`,
+          type: "button",
+          role: "combobox",
+          id: fieldId,
           disabled,
-          "aria-label": label,
+          className: `${selectorBaseClasses} ${selectorDarkClasses} ${error ? inputErrorClasses : openOrDefaultBorder} ${fieldDisabledClasses} ${selected ? "" : fakePlaceholderStyles}`,
+          onClick: (event) => {
+            onClick?.(event);
+            if (open) setOpen(false);
+            else openMenu();
+          },
+          onKeyDown: handleKeyDown,
+          "aria-haspopup": "listbox",
+          "aria-expanded": open,
+          "aria-controls": open ? listboxId : void 0,
+          "aria-activedescendant": open && rowCount > 0 ? rowId(activeIndex) : void 0,
+          "aria-labelledby": label ? `label-${name}` : void 0,
+          "aria-required": required,
           "aria-invalid": !!error,
           "aria-errormessage": error ? `error-${name}` : void 0,
           "aria-describedby": label ? `label-${name}` : void 0,
-          children: [
-            /* @__PURE__ */ jsxRuntime.jsx("option", { value: "", disabled: true, children: placeholder }),
-            options.map(({ id, label: label2 }) => {
-              if (id === "") return null;
-              return /* @__PURE__ */ jsxRuntime.jsx("option", { value: id, children: label2 }, id);
-            })
-          ]
+          children: selected ? selected.label : placeholder
         }
       ),
+      name ? /* @__PURE__ */ jsxRuntime.jsx("input", { type: "hidden", name, value: currentValue }) : null,
       /* @__PURE__ */ jsxRuntime.jsx(
-        "svg",
+        ChevronDown,
         {
-          xmlns: "http://www.w3.org/2000/svg",
-          fill: "none",
-          viewBox: "0 0 24 24",
-          strokeWidth: "1.2",
-          stroke: "currentColor",
-          className: selectorIconStyles,
-          children: /* @__PURE__ */ jsxRuntime.jsx("path", { strokeLinecap: "round", strokeLinejoin: "round", d: "m19.5 8.25-7.5 7.5-7.5-7.5" })
+          className: `${disabled ? selectorIconDisabledStyles : selectorIconStyles} ${open ? "rotate-180" : ""}`
         }
-      )
+      ),
+      open ? /* @__PURE__ */ jsxRuntime.jsxs(
+        "ul",
+        {
+          id: listboxId,
+          role: "listbox",
+          "aria-labelledby": label ? `label-${name}` : void 0,
+          className: selectorMenuClasses,
+          children: [
+            items.map(({ id, label: optionLabel }, index) => /* @__PURE__ */ jsxRuntime.jsx(
+              "li",
+              {
+                id: rowId(index),
+                role: "option",
+                "aria-selected": index === selectedIndex,
+                className: `${selectorOptionClasses} ${index === selectedIndex ? selectorOptionSelectedClasses : ""} ${index === activeIndex ? selectorOptionActiveClasses : ""}`,
+                onMouseDown: (event) => event.preventDefault(),
+                onMouseEnter: () => setActiveIndex(index),
+                onClick: () => commitRow(index),
+                children: optionLabel
+              },
+              id
+            )),
+            onAddNew ? /* @__PURE__ */ jsxRuntime.jsx(
+              "li",
+              {
+                id: rowId(addNewIndex),
+                role: "option",
+                "aria-selected": false,
+                className: `${selectorAddNewClasses} ${activeIndex === addNewIndex ? selectorOptionActiveClasses : ""}`,
+                onMouseDown: (event) => event.preventDefault(),
+                onMouseEnter: () => setActiveIndex(addNewIndex),
+                onClick: () => commitRow(addNewIndex),
+                children: addNewLabel
+              }
+            ) : null
+          ]
+        }
+      ) : null
     ] }),
     error ? /* @__PURE__ */ jsxRuntime.jsx(Typography, { size: "details", as: "p", color: "error", id: `error-${name}`, className: textErrorClasses, children: error }) : null
   ] });
@@ -520,6 +673,7 @@ exports.BrasilFlag = BrasilFlag;
 exports.Button = Button;
 exports.BuyMeACoffee = BuyMeACoffee;
 exports.Card = Card;
+exports.ChevronDown = ChevronDown;
 exports.Github = Github;
 exports.Input = Input;
 exports.Instagram = Instagram;
@@ -532,6 +686,8 @@ exports.actionClasses = actionClasses;
 exports.baseButtonClasses = baseButtonClasses;
 exports.colorsClasses = colorsClasses;
 exports.fakePlaceholderStyles = fakePlaceholderStyles;
+exports.fieldDisabledClasses = fieldDisabledClasses;
+exports.fieldLabelDisabledClasses = fieldLabelDisabledClasses;
 exports.getButtonFinalClassName = getButtonFinalClassName;
 exports.getComponent = getComponent;
 exports.getTypographyFinalClassName = getTypographyFinalClassName;
@@ -539,8 +695,15 @@ exports.inputBorderClasses = inputBorderClasses;
 exports.inputDarkClasses = inputDarkClasses;
 exports.inputErrorClasses = inputErrorClasses;
 exports.placeholderStyles = placeholderStyles;
+exports.selectorAddNewClasses = selectorAddNewClasses;
 exports.selectorBaseClasses = selectorBaseClasses;
 exports.selectorDarkClasses = selectorDarkClasses;
+exports.selectorIconDisabledStyles = selectorIconDisabledStyles;
 exports.selectorIconStyles = selectorIconStyles;
+exports.selectorMenuClasses = selectorMenuClasses;
+exports.selectorOpenBorderClasses = selectorOpenBorderClasses;
+exports.selectorOptionActiveClasses = selectorOptionActiveClasses;
+exports.selectorOptionClasses = selectorOptionClasses;
+exports.selectorOptionSelectedClasses = selectorOptionSelectedClasses;
 exports.sizeClasses = sizeClasses;
 exports.textErrorClasses = textErrorClasses;

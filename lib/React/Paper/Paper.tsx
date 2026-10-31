@@ -10,7 +10,7 @@ export interface PaperProps {
 export function Paper({ children, className, isCard, ...rest }: PaperProps) {
   return (
     <div
-      className={`shadow-paper dark:shadow-paper-dark border border-black dark:border-white ${className ? className : ''} ${isCard ? '' : nonCardClasses}`}
+      className={`bg-background-on-light dark:bg-background-on-dark shadow-paper dark:shadow-paper-dark border border-black dark:border-white ${className ? className : ''} ${isCard ? '' : nonCardClasses}`}
       {...rest}
     >
       {children}

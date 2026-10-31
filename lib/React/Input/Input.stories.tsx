@@ -8,7 +8,7 @@ const meta = {
 } satisfies Meta<typeof Input>;
 export default meta;
 
-export function InputStory({ error }: { error?: string }) {
+export function InputStory({ error, disabled }: { error?: string; disabled?: boolean }) {
   const [value, setValue] = useState('');
   const handleChange = (val: string) => {
     console.log(val);
@@ -22,6 +22,7 @@ export function InputStory({ error }: { error?: string }) {
       label="Label"
       placeholder="placeholder"
       error={error}
+      disabled={disabled}
     />
   );
 }
@@ -32,5 +33,12 @@ export const ErrorInput: Story = {
   render: InputStory,
   args: {
     error: 'Error message',
+  },
+};
+
+export const DisabledInput: Story = {
+  render: InputStory,
+  args: {
+    disabled: true,
   },
 };

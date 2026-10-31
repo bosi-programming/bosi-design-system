@@ -1,4 +1,6 @@
 import {
+  fieldDisabledClasses,
+  fieldLabelDisabledClasses,
   inputBorderClasses,
   inputDarkClasses,
   inputErrorClasses,
@@ -23,7 +25,12 @@ export function Input({
   return (
     <div className={`flex w-full flex-col ${className}`}>
       {label ? (
-        <Typography as="label" id={`label-${name}`} htmlFor={name} className="mb-2!">
+        <Typography
+          as="label"
+          id={`label-${name}`}
+          htmlFor={name}
+          className={`mb-2! ${disabled ? fieldLabelDisabledClasses : ''}`}
+        >
           {label}
           {required ? '*' : null}
         </Typography>
@@ -31,7 +38,7 @@ export function Input({
       <input
         required={required}
         id={name}
-        className={`focus:border-emerald focus:ring-emerald h-11 w-full rounded-xl border bg-white px-2 text-black ${placeholderStyles} ${inputDarkClasses} ${error ? inputErrorClasses : inputBorderClasses}`}
+        className={`focus:border-emerald focus:ring-emerald h-11 w-full rounded-xl border bg-white px-2 text-black ${placeholderStyles} ${inputDarkClasses} ${error ? inputErrorClasses : inputBorderClasses} ${fieldDisabledClasses}`}
         placeholder={placeholder}
         value={value}
         onChange={(e) => setValue(e.target.value)}

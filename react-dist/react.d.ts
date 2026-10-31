@@ -48,9 +48,20 @@ export declare interface CardProps {
     className?: string;
 }
 
+export declare function ChevronDown({ className, size }: ChevronDownProps): JSX.Element;
+
+export declare interface ChevronDownProps {
+    className?: string;
+    size?: string;
+}
+
 export declare const colorsClasses: Record<ButtonColor, string>;
 
 export declare const fakePlaceholderStyles = "dark:text-gray-68! text-gray-68!";
+
+export declare const fieldDisabledClasses = "disabled:bg-gray-93 disabled:border-gray-68 disabled:text-gray-68 dark:disabled:bg-nav-background-on-dark dark:disabled:border-gray-68 dark:disabled:text-gray-68";
+
+export declare const fieldLabelDisabledClasses = "text-gray-68! dark:text-gray-68!";
 
 export declare function getButtonFinalClassName(action: ButtonAction | undefined, color: ButtonColor | undefined, size: ButtonSize | undefined, className?: string): string;
 
@@ -69,7 +80,7 @@ export declare function Input({ name, disabled, required, value, setValue, label
 
 export declare const inputBorderClasses = "border-gray-68 dark:border-emerald";
 
-export declare const inputDarkClasses = "dark:bg-green dark:text-white";
+export declare const inputDarkClasses = "dark:bg-background-on-dark dark:text-white";
 
 export declare const inputErrorClasses = "border-error dark:border-error-on-dark";
 
@@ -110,19 +121,46 @@ export declare interface PaperProps {
 
 export declare const placeholderStyles = "dark:placeholder:text-gray-68! placeholder:text-gray-68";
 
-export declare function Selector({ placeholder, options, label, name, required, disabled, error, className, ...rest }: SelectorProps): JSX.Element;
+export declare function Selector({ placeholder, options, label, name, required, disabled, error, className, value, defaultValue, onChange, onAddNew, addNewLabel, onClick, onKeyDown, ...rest }: SelectorProps): JSX.Element;
 
-export declare const selectorBaseClasses = "h-11 rounded-xl border bg-white pl-2 pr-9 text-black outline-none focus:border-emerald focus:ring-emerald appearance-none cursor-pointer w-full";
+export declare const selectorAddNewClasses = "flex h-10 cursor-pointer items-center px-2 text-primary-on-light dark:text-primary-on-dark";
 
-export declare const selectorDarkClasses = "dark:bg-green dark:placeholder-gray-68 dark:text-white";
+export declare const selectorBaseClasses = "h-11 rounded-xl border bg-white pl-2 pr-9 text-left text-black outline-none focus:border-emerald focus:ring-emerald focus-visible:ring-1 cursor-pointer w-full disabled:cursor-not-allowed";
 
-export declare const selectorIconStyles = "pointer-events-none absolute right-2.5 top-3 h-5 w-5 text-black dark:text-gray-68";
+export declare interface SelectorChangeEvent {
+    target: {
+        name?: string;
+        value: string;
+    };
+}
 
-export declare interface SelectorProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
+export declare const selectorDarkClasses = "dark:bg-background-on-dark dark:text-white";
+
+export declare const selectorIconDisabledStyles = "pointer-events-none absolute right-2.5 top-2.5 text-gray-68";
+
+export declare const selectorIconStyles = "pointer-events-none absolute right-2.5 top-2.5 text-black dark:text-gray-68";
+
+export declare const selectorMenuClasses = "absolute left-0 top-full z-10 mt-2 w-full rounded-xl border border-gray-68 bg-white py-1 dark:border-emerald dark:bg-background-on-dark";
+
+export declare const selectorOpenBorderClasses = "border-emerald dark:border-emerald";
+
+export declare const selectorOptionActiveClasses = "ring-1 ring-inset ring-emerald";
+
+export declare const selectorOptionClasses = "flex h-10 cursor-pointer items-center px-2 text-black dark:text-white";
+
+export declare const selectorOptionSelectedClasses = "bg-gray-93 dark:bg-nav-background-on-dark";
+
+export declare interface SelectorProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'value' | 'defaultValue' | 'onChange' | 'type' | 'role' | 'children'> {
     label?: string;
     placeholder?: string;
     error?: string;
     className?: string;
+    required?: boolean;
+    value?: string | number;
+    defaultValue?: string | number;
+    onChange?: (event: SelectorChangeEvent) => void;
+    onAddNew?: () => void;
+    addNewLabel?: React.ReactNode;
     options: {
         id: string | number;
         label: React.ReactNode;

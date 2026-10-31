@@ -3,3 +3,4 @@ export * from './USAFlag';
 export * from './Linkedin';
 export * from './Instagram';
 export * from './BrasilFlag';
+export * from './ChevronDown';
