@@ -21,6 +21,65 @@ describe('Button size options', () => {
   });
 });
 
+describe('Button Penpot dimensions', () => {
+  it.each([
+    ['small', 'h-8.5', 'px-4'],
+    ['medium', 'h-10.5', 'px-8'],
+    ['full-width', 'h-12.5', 'px-8'],
+  ] as const)('should give %s the Penpot height and padding', (size, height, padding) => {
+    render(<Button size={size}>Test</Button>);
+    const button = screen.getByRole('button');
+    expect(button).toHaveClass(height, padding);
+    expect(button.className).not.toMatch(/\bpy-/);
+  });
+
+  it('should have a 10px radius', () => {
+    render(<Button>Test</Button>);
+    expect(screen.getByRole('button')).toHaveClass('rounded-[10px]');
+    expect(screen.getByRole('button')).not.toHaveClass('rounded-lg');
+  });
+});
+
+describe('Button secondary contrast', () => {
+  it('should use gray-15 text on the light theme', () => {
+    render(<Button color="secondary">Test</Button>);
+    expect(screen.getByRole('button')).toHaveClass('text-gray-15');
+    expect(screen.getByRole('button')).not.toHaveClass('text-white');
+  });
+});
+
+describe('Button disabled state', () => {
+  it('should forward disabled to the element', () => {
+    render(<Button disabled>Test</Button>);
+    expect(screen.getByRole('button')).toBeDisabled();
+  });
+
+  it.each([{ color: 'default' }, { color: 'primary' }, { color: 'secondary' }, { action: 'error' }] as const)(
+    'should use the Penpot disabled colours for %o',
+    (props) => {
+      render(
+        <Button disabled {...props}>
+          Test
+        </Button>,
+      );
+      expect(screen.getByRole('button')).toHaveClass(
+        'disabled:bg-gray-68',
+        'disabled:text-gray-15',
+        'dark:disabled:bg-nav-background-on-dark',
+        'dark:disabled:text-gray-68',
+      );
+    },
+  );
+
+  it('should only apply the hover effects when enabled', () => {
+    render(<Button>Test</Button>);
+    const button = screen.getByRole('button');
+    expect(button).toHaveClass('enabled:hover:scale-110', 'enabled:hover:brightness-75');
+    expect(button).not.toHaveClass('hover:scale-110');
+    expect(button).not.toHaveClass('hover:brightness-75');
+  });
+});
+
 describe('Button color options', () => {
   it('should have default color classes', () => {
     render(<Button>Test</Button>);

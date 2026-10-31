@@ -16,3 +16,46 @@ export const DefaultButton: Story = {
     children: 'Click me',
   },
 };
+
+export const Small: Story = {
+  args: {
+    children: 'Click me',
+    size: 'small',
+  },
+};
+
+export const FullWidth: Story = {
+  args: {
+    children: 'Click me',
+    size: 'full-width',
+  },
+};
+
+export const Primary: Story = {
+  args: {
+    children: 'Click me',
+    color: 'primary',
+  },
+};
+
+export const Secondary: Story = {
+  args: {
+    children: 'Click me',
+    color: 'secondary',
+  },
+};
+
+export const Error: Story = {
+  args: {
+    children: 'Click me',
+    action: 'error',
+  },
+};
+
+export const Disabled: Story = {
+  args: {
+    children: 'Click me',
+    color: 'primary',
+    disabled: true,
+  },
+};

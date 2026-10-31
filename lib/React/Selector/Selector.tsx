@@ -75,7 +75,7 @@ export function Selector({
         </svg>
       </div>
       {error ? (
-        <Typography size="details" as="p" id={`error-${name}`} className={textErrorClasses}>
+        <Typography size="details" as="p" color="error" id={`error-${name}`} className={textErrorClasses}>
           {error}
         </Typography>
       ) : null}

@@ -3,7 +3,7 @@ import { ReactNode } from 'react';
 
 export declare const actionClasses: Record<ButtonAction, string>;
 
-export declare const baseButtonClasses = "hover:scale-110 rounded-lg cursor-pointer border-none outline-transparent text-body hover:brightness-75 disabled:cursor-not-allowed disabled:bg-gray-15";
+export declare const baseButtonClasses = "enabled:hover:scale-110 rounded-[10px] cursor-pointer border-none outline-transparent text-body enabled:hover:brightness-75 disabled:cursor-not-allowed disabled:bg-gray-68 disabled:text-gray-15 dark:disabled:bg-nav-background-on-dark dark:disabled:text-gray-68";
 
 export declare function BrasilFlag({ className, size }: BrasilFlagProps): JSX.Element;
 
@@ -25,7 +25,7 @@ export declare interface ButtonBaseProps {
 
 export declare type ButtonColor = 'default' | 'primary' | 'secondary';
 
-export declare interface ButtonProps extends Omit<React.HTMLAttributes<HTMLButtonElement>, 'color' | 'className'>, ButtonBaseProps {
+export declare interface ButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'color' | 'className'>, ButtonBaseProps {
     children: ReactNode;
 }
 
@@ -50,7 +50,7 @@ export declare interface CardProps {
 
 export declare const colorsClasses: Record<ButtonColor, string>;
 
-export declare const fakePlaceholderStyles = "dark:text-gray-400! text-gray-68!";
+export declare const fakePlaceholderStyles = "dark:text-gray-68! text-gray-68!";
 
 export declare function getButtonFinalClassName(action: ButtonAction | undefined, color: ButtonColor | undefined, size: ButtonSize | undefined, className?: string): string;
 
@@ -69,9 +69,9 @@ export declare function Input({ name, disabled, required, value, setValue, label
 
 export declare const inputBorderClasses = "border-gray-68 dark:border-emerald";
 
-export declare const inputDarkClasses = "dark:focus:ring-emerald dark:focus:border-emerald dark:bg-green dark:text-white";
+export declare const inputDarkClasses = "dark:bg-green dark:text-white";
 
-export declare const inputErrorClasses = "border-error dark:border-red-400";
+export declare const inputErrorClasses = "border-error dark:border-error-on-dark";
 
 export declare interface InputProps {
     name: string;
@@ -108,15 +108,15 @@ export declare interface PaperProps {
     className?: string;
 }
 
-export declare const placeholderStyles = "dark:placeholder:text-gray-400! placeholder:text-gray-68";
+export declare const placeholderStyles = "dark:placeholder:text-gray-68! placeholder:text-gray-68";
 
 export declare function Selector({ placeholder, options, label, name, required, disabled, error, className, ...rest }: SelectorProps): JSX.Element;
 
-export declare const selectorBaseClasses = "h-11 rounded-xl border bg-white pl-2 pr-9 text-black outline-none focus:border-blue-500 focus:ring-blue-500 appearance-none cursor-pointer w-full";
+export declare const selectorBaseClasses = "h-11 rounded-xl border bg-white pl-2 pr-9 text-black outline-none focus:border-emerald focus:ring-emerald appearance-none cursor-pointer w-full";
 
-export declare const selectorDarkClasses = "dark:bg-green dark:placeholder-emerald dark:text-white dark:focus:ring-emerald dark:focus:border-emerald";
+export declare const selectorDarkClasses = "dark:bg-green dark:placeholder-gray-68 dark:text-white";
 
-export declare const selectorIconStyles = "pointer-events-none absolute right-2.5 top-3 h-5 w-5 text-black dark:text-gray-400";
+export declare const selectorIconStyles = "pointer-events-none absolute right-2.5 top-3 h-5 w-5 text-black dark:text-gray-68";
 
 export declare interface SelectorProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
     label?: string;
@@ -133,7 +133,7 @@ export declare const sizeClasses: Record<ButtonSize, string>;
 
 export declare type TColor = 'default' | 'primary' | 'secondary' | 'error';
 
-export declare const textErrorClasses = "mt-2 text-error dark:text-red-400";
+export declare const textErrorClasses = "mt-2 text-error dark:text-error-on-dark";
 
 export declare type TSize = 'body' | 'h1' | 'h2' | 'h3' | 'h4' | 'details';
 

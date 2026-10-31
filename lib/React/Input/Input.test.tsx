@@ -63,6 +63,28 @@ describe('Input', () => {
     expect(input).toHaveClass('border-error');
     expect(input).not.toHaveClass('border-gray-68');
   });
+  it('should use the Penpot error tokens on the dark theme', () => {
+    render(<Input name="test" value="" setValue={() => {}} error="Invalid input" />);
+    expect(screen.getByRole('textbox')).toHaveClass('dark:border-error-on-dark');
+    const error = screen.getByText('Invalid input');
+    expect(error).toHaveClass('dark:text-error-on-dark');
+    expect(error).not.toHaveClass('dark:text-gray-93');
+  });
+
+  it('should use emerald on focus in both themes', () => {
+    render(<Input name="test" value="" setValue={() => {}} />);
+    const input = screen.getByRole('textbox');
+    expect(input).toHaveClass('focus:border-emerald', 'focus:ring-emerald');
+    expect(input).not.toHaveClass('focus:border-blue-500');
+    expect(input).not.toHaveClass('dark:focus:border-emerald');
+    expect(input).not.toHaveClass('dark:focus:ring-emerald');
+  });
+
+  it('should use gray-68 for the placeholder in both themes', () => {
+    render(<Input name="test" value="" setValue={() => {}} />);
+    expect(screen.getByRole('textbox')).toHaveClass('dark:placeholder:text-gray-68!', 'placeholder:text-gray-68');
+  });
+
   it('should align label and error with the field and keep the error 8px below it', () => {
     render(<Input name="test" value="" setValue={() => {}} label="Label" error="Invalid input" />);
     expect(screen.getByText('Label')).not.toHaveClass('ml-2');

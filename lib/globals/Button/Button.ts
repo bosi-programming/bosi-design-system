@@ -10,7 +10,7 @@ export interface ButtonBaseProps {
 }
 
 export const baseButtonClasses =
-  'hover:scale-110 rounded-lg cursor-pointer border-none outline-transparent text-body hover:brightness-75 disabled:cursor-not-allowed disabled:bg-gray-15';
+  'enabled:hover:scale-110 rounded-[10px] cursor-pointer border-none outline-transparent text-body enabled:hover:brightness-75 disabled:cursor-not-allowed disabled:bg-gray-68 disabled:text-gray-15 dark:disabled:bg-nav-background-on-dark dark:disabled:text-gray-68';
 
 export const actionClasses: Record<ButtonAction, string> = {
   error: 'bg-error text-white',
@@ -22,11 +22,11 @@ export const actionClasses: Record<ButtonAction, string> = {
 export const colorsClasses: Record<ButtonColor, string> = {
   default: actionClasses['info'],
   primary: 'bg-primary-on-light text-white dark:bg-primary-on-dark dark:text-black',
-  secondary: 'bg-secondary-on-light text-white dark:bg-secondary-on-dark dark:text-black',
+  secondary: 'bg-secondary-on-light text-gray-15 dark:bg-secondary-on-dark dark:text-black',
 };
 
 export const sizeClasses: Record<ButtonSize, string> = {
-  small: 'px-4 py-2',
-  medium: 'px-8 py-3',
-  'full-width': 'w-full px-8 py-3',
+  small: 'h-8.5 px-4',
+  medium: 'h-10.5 px-8',
+  'full-width': 'h-12.5 w-full px-8',
 };
