@@ -1,3 +1,4 @@
+import { AnchorHTMLAttributes } from 'react';
 import { HTMLAttributes } from 'react';
 import { JSX } from 'react/jsx-runtime';
 import { ReactNode } from 'react';
@@ -144,6 +145,49 @@ export declare function Linkedin({ className, size }: LinkedinProps): JSX.Elemen
 export declare interface LinkedinProps {
     className?: string;
     size?: string;
+}
+
+export declare function Modal({ open, title, children, actions, onClose }: ModalProps): JSX.Element | null;
+
+export declare const modalActionsClasses = "flex flex-col-reverse gap-2 md:flex-row md:justify-end";
+
+export declare const modalContentClasses = "text-body text-black dark:text-gray-93";
+
+export declare const modalDialogClasses = "flex w-full flex-col gap-4 rounded-xl border border-black bg-background-on-light px-5 py-6 shadow-paper outline-none md:w-[480px] md:p-6 dark:border-white dark:bg-background-on-dark dark:shadow-paper-dark";
+
+export declare const modalFocusableSelector = "a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex=\"-1\"])";
+
+export declare const modalOverlayClasses = "fixed inset-0 z-50 flex items-center justify-center bg-overlay px-4";
+
+export declare interface ModalProps {
+    open: boolean;
+    title: ReactNode;
+    children: ReactNode;
+    actions?: ReactNode;
+    onClose: () => void;
+}
+
+export declare function Navigation({ items, actions, className, ...props }: NavigationProps): JSX.Element;
+
+export declare const navigationClasses = "flex flex-col gap-2 bg-nav-background-on-light px-4 py-3 md:flex-row md:items-center md:justify-between md:px-6 dark:bg-nav-background-on-dark";
+
+export declare const navigationGroupClasses = "flex gap-2";
+
+export declare interface NavigationProps extends HTMLAttributes<HTMLElement> {
+    items: ReactNode;
+    actions?: ReactNode;
+}
+
+export declare function NavItem({ active, className, children, ...props }: NavItemProps): JSX.Element;
+
+export declare const navItemActiveClasses = "bg-primary-on-light text-white dark:bg-primary-on-dark dark:text-black";
+
+export declare const navItemBaseClasses = "rounded-lg px-3 py-2 text-body leading-[18px]";
+
+export declare const navItemDefaultClasses = "text-black dark:text-white";
+
+export declare interface NavItemProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
+    active?: boolean;
 }
 
 export declare function Paper({ children, className, isCard, ...rest }: PaperProps): JSX.Element;

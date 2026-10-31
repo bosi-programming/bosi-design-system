@@ -5,6 +5,8 @@ export * from './Card';
 export * from './Icons';
 export * from './IconButton';
 export * from './Input';
+export * from './Modal';
+export * from './Navigation';
 export * from './Paper';
 export * from './Selector';
 export * from './Toast';

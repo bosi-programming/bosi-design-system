@@ -1,6 +1,6 @@
 /* empty css       */
 import { jsx, jsxs } from 'react/jsx-runtime';
-import { useId, useRef, useState, useEffect } from 'react';
+import { useId, useRef, useEffect, useState } from 'react';
 
 const baseButtonClasses = "enabled:hover:scale-110 rounded-[10px] cursor-pointer border-none outline-transparent text-body enabled:hover:brightness-75 disabled:cursor-not-allowed disabled:bg-gray-68 disabled:text-gray-15 dark:disabled:bg-nav-background-on-dark dark:disabled:text-gray-68";
 const actionClasses = {
@@ -88,6 +88,18 @@ const bannerTypeClasses = {
 const toastClasses = "pointer-events-auto flex w-full items-center gap-2 rounded-xl bg-error py-1 pl-4 pr-1 text-white shadow-paper dark:border dark:border-white dark:shadow-paper-dark";
 const toastCloseClasses = "flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center";
 const toastContainerClasses = "pointer-events-none fixed inset-x-4 top-4 z-50 flex flex-col gap-2 md:left-auto md:w-[360px]";
+
+const modalOverlayClasses = "fixed inset-0 z-50 flex items-center justify-center bg-overlay px-4";
+const modalDialogClasses = "flex w-full flex-col gap-4 rounded-xl border border-black bg-background-on-light px-5 py-6 shadow-paper outline-none md:w-[480px] md:p-6 dark:border-white dark:bg-background-on-dark dark:shadow-paper-dark";
+const modalContentClasses = "text-body text-black dark:text-gray-93";
+const modalActionsClasses = "flex flex-col-reverse gap-2 md:flex-row md:justify-end";
+const modalFocusableSelector = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
+const navigationClasses = "flex flex-col gap-2 bg-nav-background-on-light px-4 py-3 md:flex-row md:items-center md:justify-between md:px-6 dark:bg-nav-background-on-dark";
+const navigationGroupClasses = "flex gap-2";
+const navItemBaseClasses = "rounded-lg px-3 py-2 text-body leading-[18px]";
+const navItemDefaultClasses = "text-black dark:text-white";
+const navItemActiveClasses = "bg-primary-on-light text-white dark:bg-primary-on-dark dark:text-black";
 
 function Banner({ type, children, className }) {
   return /* @__PURE__ */ jsx(
@@ -597,6 +609,96 @@ function Input({
   ] });
 }
 
+function Modal({ open, title, children, actions, onClose }) {
+  const titleId = useId();
+  const dialogRef = useRef(null);
+  const latestOnClose = useRef(onClose);
+  useEffect(() => {
+    latestOnClose.current = onClose;
+  }, [onClose]);
+  useEffect(() => {
+    if (!open) return;
+    const opener = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    const dialog = dialogRef.current;
+    const focusable = () => Array.from(dialog?.querySelectorAll(modalFocusableSelector) ?? []);
+    (focusable()[0] ?? dialog)?.focus();
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        latestOnClose.current();
+        return;
+      }
+      if (event.key !== "Tab") return;
+      const controls = focusable();
+      const first = controls[0];
+      const last = controls[controls.length - 1];
+      if (!first || !last) {
+        event.preventDefault();
+        return;
+      }
+      const active = document.activeElement;
+      const outside = !dialog?.contains(active) || active === dialog;
+      if (event.shiftKey && (active === first || outside)) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && (active === last || outside)) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      opener?.focus();
+    };
+  }, [open]);
+  if (!open) return null;
+  return /* @__PURE__ */ jsx(
+    "div",
+    {
+      className: modalOverlayClasses,
+      onMouseDown: (event) => {
+        if (event.target !== event.currentTarget) return;
+        event.preventDefault();
+        onClose();
+      },
+      children: /* @__PURE__ */ jsxs(
+        "div",
+        {
+          ref: dialogRef,
+          role: "dialog",
+          "aria-modal": "true",
+          "aria-labelledby": titleId,
+          tabIndex: -1,
+          className: modalDialogClasses,
+          children: [
+            /* @__PURE__ */ jsx(Typography, { as: "h3", id: titleId, size: "h3", color: "primary", children: title }),
+            /* @__PURE__ */ jsx("div", { className: modalContentClasses, children }),
+            actions ? /* @__PURE__ */ jsx("div", { className: modalActionsClasses, children: actions }) : null
+          ]
+        }
+      )
+    }
+  );
+}
+
+function NavItem({ active, className, children, ...props }) {
+  return /* @__PURE__ */ jsx(
+    "a",
+    {
+      ...props,
+      "aria-current": active ? "page" : void 0,
+      className: `${navItemBaseClasses} ${active ? navItemActiveClasses : navItemDefaultClasses} ${className ?? ""}`,
+      children
+    }
+  );
+}
+function Navigation({ items, actions, className, ...props }) {
+  return /* @__PURE__ */ jsxs("nav", { ...props, className: `${navigationClasses} ${className ?? ""}`, children: [
+    /* @__PURE__ */ jsx("div", { className: navigationGroupClasses, children: items }),
+    actions ? /* @__PURE__ */ jsx("div", { className: navigationGroupClasses, children: actions }) : null
+  ] });
+}
+
 function Selector({
   placeholder,
   options,
@@ -790,4 +892,4 @@ function ToastContainer({ className, children, ...props }) {
   return /* @__PURE__ */ jsx("div", { className: `${toastContainerClasses} ${className ?? ""}`, ...props, children });
 }
 
-export { Banner, BrasilFlag, Button, BuyMeACoffee, Card, ChevronDown, Close, Github, IconButton, Input, Instagram, Linkedin, Paper, Pencil, Selector, Toast, ToastContainer, Trash, Typography, USAFlag, actionClasses, bannerBaseClasses, bannerTypeClasses, baseButtonClasses, colorsClasses, fakePlaceholderStyles, fieldDisabledClasses, fieldLabelDisabledClasses, getButtonFinalClassName, getComponent, getTypographyFinalClassName, iconButtonActionClasses, iconButtonBaseClasses, inputBorderClasses, inputDarkClasses, inputErrorClasses, placeholderStyles, selectorAddNewClasses, selectorBaseClasses, selectorDarkClasses, selectorIconDisabledStyles, selectorIconStyles, selectorMenuClasses, selectorOpenBorderClasses, selectorOptionActiveClasses, selectorOptionClasses, selectorOptionSelectedClasses, sizeClasses, textErrorClasses, toastClasses, toastCloseClasses, toastContainerClasses };
+export { Banner, BrasilFlag, Button, BuyMeACoffee, Card, ChevronDown, Close, Github, IconButton, Input, Instagram, Linkedin, Modal, NavItem, Navigation, Paper, Pencil, Selector, Toast, ToastContainer, Trash, Typography, USAFlag, actionClasses, bannerBaseClasses, bannerTypeClasses, baseButtonClasses, colorsClasses, fakePlaceholderStyles, fieldDisabledClasses, fieldLabelDisabledClasses, getButtonFinalClassName, getComponent, getTypographyFinalClassName, iconButtonActionClasses, iconButtonBaseClasses, inputBorderClasses, inputDarkClasses, inputErrorClasses, modalActionsClasses, modalContentClasses, modalDialogClasses, modalFocusableSelector, modalOverlayClasses, navItemActiveClasses, navItemBaseClasses, navItemDefaultClasses, navigationClasses, navigationGroupClasses, placeholderStyles, selectorAddNewClasses, selectorBaseClasses, selectorDarkClasses, selectorIconDisabledStyles, selectorIconStyles, selectorMenuClasses, selectorOpenBorderClasses, selectorOptionActiveClasses, selectorOptionClasses, selectorOptionSelectedClasses, sizeClasses, textErrorClasses, toastClasses, toastCloseClasses, toastContainerClasses };
