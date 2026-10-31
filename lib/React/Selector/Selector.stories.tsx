@@ -20,7 +20,7 @@ export function SelectorStory({ error, disabled, onAddNew, addNewLabel }: Partia
         placeholder="Placeholder"
         error={error}
         disabled={disabled}
-        onAddNew={onAddNew}
+        onAddNew={addNewLabel ? onAddNew : undefined}
         addNewLabel={addNewLabel}
         options={[
           { id: 'one', label: 'Option 1' },

@@ -4,3 +4,6 @@ export * from './Linkedin';
 export * from './Instagram';
 export * from './BrasilFlag';
 export * from './ChevronDown';
+export * from './Trash';
+export * from './Pencil';
+export * from './Close';

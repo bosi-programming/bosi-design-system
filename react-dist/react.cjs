@@ -76,6 +76,34 @@ const selectorOptionSelectedClasses = "bg-gray-93 dark:bg-nav-background-on-dark
 const selectorOptionActiveClasses = "ring-1 ring-inset ring-emerald";
 const selectorAddNewClasses = "flex h-10 cursor-pointer items-center px-2 text-primary-on-light dark:text-primary-on-dark";
 
+const iconButtonBaseClasses = "flex h-11 w-11 items-center justify-center rounded-[10px] cursor-pointer enabled:hover:brightness-75 disabled:cursor-not-allowed";
+const iconButtonActionClasses = {
+  delete: "bg-error text-white",
+  edit: "bg-primary-on-light text-white dark:bg-primary-on-dark dark:text-black"
+};
+
+const bannerBaseClasses = "w-full rounded-xl px-4 py-3 text-body text-white dark:border dark:border-white";
+const bannerTypeClasses = {
+  error: "bg-error",
+  warning: "bg-warning",
+  info: "bg-info"
+};
+
+const toastClasses = "pointer-events-auto flex w-full items-center gap-2 rounded-xl bg-error py-1 pl-4 pr-1 text-white shadow-paper dark:border dark:border-white dark:shadow-paper-dark";
+const toastCloseClasses = "flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center";
+const toastContainerClasses = "pointer-events-none fixed inset-x-4 top-4 z-50 flex flex-col gap-2 md:left-auto md:w-[360px]";
+
+function Banner({ type, children, className }) {
+  return /* @__PURE__ */ jsxRuntime.jsx(
+    "div",
+    {
+      role: type === "error" ? "alert" : "status",
+      className: `${bannerBaseClasses} ${bannerTypeClasses[type]} ${className ?? ""}`,
+      children
+    }
+  );
+}
+
 const Button = ({ children, className, color = "default", size = "medium", action, ...props }) => {
   const buttonClasses = getButtonFinalClassName(action, color, size, className);
   return /* @__PURE__ */ jsxRuntime.jsx("button", { className: buttonClasses, ...props, children });
@@ -451,6 +479,81 @@ function ChevronDown({ className, size }) {
   );
 }
 
+function Trash({ className, size }) {
+  const finalSize = size || "24px";
+  return /* @__PURE__ */ jsxRuntime.jsx(
+    "svg",
+    {
+      className,
+      height: finalSize,
+      width: finalSize,
+      viewBox: "0 0 24 24",
+      fill: "none",
+      stroke: "currentColor",
+      strokeWidth: "1.5",
+      strokeLinecap: "round",
+      strokeLinejoin: "round",
+      "aria-hidden": "true",
+      xmlns: "http://www.w3.org/2000/svg",
+      children: /* @__PURE__ */ jsxRuntime.jsx("path", { d: "m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" })
+    }
+  );
+}
+
+function Pencil({ className, size }) {
+  const finalSize = size || "24px";
+  return /* @__PURE__ */ jsxRuntime.jsx(
+    "svg",
+    {
+      className,
+      height: finalSize,
+      width: finalSize,
+      viewBox: "0 0 24 24",
+      fill: "none",
+      stroke: "currentColor",
+      strokeWidth: "1.5",
+      strokeLinecap: "round",
+      strokeLinejoin: "round",
+      "aria-hidden": "true",
+      xmlns: "http://www.w3.org/2000/svg",
+      children: /* @__PURE__ */ jsxRuntime.jsx("path", { d: "m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" })
+    }
+  );
+}
+
+function Close({ className, size }) {
+  const finalSize = size || "24px";
+  return /* @__PURE__ */ jsxRuntime.jsx(
+    "svg",
+    {
+      className,
+      height: finalSize,
+      width: finalSize,
+      viewBox: "0 0 24 24",
+      fill: "none",
+      stroke: "currentColor",
+      strokeWidth: "1.5",
+      strokeLinecap: "round",
+      strokeLinejoin: "round",
+      "aria-hidden": "true",
+      xmlns: "http://www.w3.org/2000/svg",
+      children: /* @__PURE__ */ jsxRuntime.jsx("path", { d: "M6 18 18 6M6 6l12 12" })
+    }
+  );
+}
+
+function IconButton({ action, className, ...props }) {
+  return /* @__PURE__ */ jsxRuntime.jsx(
+    "button",
+    {
+      type: "button",
+      className: `${iconButtonBaseClasses} ${iconButtonActionClasses[action]} ${className ?? ""}`,
+      ...props,
+      children: action === "delete" ? /* @__PURE__ */ jsxRuntime.jsx(Trash, {}) : /* @__PURE__ */ jsxRuntime.jsx(Pencil, {})
+    }
+  );
+}
+
 function Input({
   name,
   disabled,
@@ -669,20 +772,51 @@ function Selector({
   ] });
 }
 
+function Toast({ message, onClose, closeLabel }) {
+  const latestOnClose = react.useRef(onClose);
+  react.useEffect(() => {
+    latestOnClose.current = onClose;
+  }, [onClose]);
+  react.useEffect(() => {
+    const closeOnOutsideClick = (event) => {
+      if (event.target instanceof Element && event.target.closest("[data-toast]")) return;
+      latestOnClose.current();
+    };
+    document.addEventListener("pointerdown", closeOnOutsideClick);
+    return () => document.removeEventListener("pointerdown", closeOnOutsideClick);
+  }, []);
+  return /* @__PURE__ */ jsxRuntime.jsxs("div", { role: "alert", "data-toast": true, className: toastClasses, children: [
+    /* @__PURE__ */ jsxRuntime.jsx("p", { className: "text-body flex-1", children: message }),
+    /* @__PURE__ */ jsxRuntime.jsx("button", { type: "button", "aria-label": closeLabel, className: toastCloseClasses, onClick: onClose, children: /* @__PURE__ */ jsxRuntime.jsx(Close, {}) })
+  ] });
+}
+function ToastContainer({ className, children, ...props }) {
+  return /* @__PURE__ */ jsxRuntime.jsx("div", { className: `${toastContainerClasses} ${className ?? ""}`, ...props, children });
+}
+
+exports.Banner = Banner;
 exports.BrasilFlag = BrasilFlag;
 exports.Button = Button;
 exports.BuyMeACoffee = BuyMeACoffee;
 exports.Card = Card;
 exports.ChevronDown = ChevronDown;
+exports.Close = Close;
 exports.Github = Github;
+exports.IconButton = IconButton;
 exports.Input = Input;
 exports.Instagram = Instagram;
 exports.Linkedin = Linkedin;
 exports.Paper = Paper;
+exports.Pencil = Pencil;
 exports.Selector = Selector;
+exports.Toast = Toast;
+exports.ToastContainer = ToastContainer;
+exports.Trash = Trash;
 exports.Typography = Typography;
 exports.USAFlag = USAFlag;
 exports.actionClasses = actionClasses;
+exports.bannerBaseClasses = bannerBaseClasses;
+exports.bannerTypeClasses = bannerTypeClasses;
 exports.baseButtonClasses = baseButtonClasses;
 exports.colorsClasses = colorsClasses;
 exports.fakePlaceholderStyles = fakePlaceholderStyles;
@@ -691,6 +825,8 @@ exports.fieldLabelDisabledClasses = fieldLabelDisabledClasses;
 exports.getButtonFinalClassName = getButtonFinalClassName;
 exports.getComponent = getComponent;
 exports.getTypographyFinalClassName = getTypographyFinalClassName;
+exports.iconButtonActionClasses = iconButtonActionClasses;
+exports.iconButtonBaseClasses = iconButtonBaseClasses;
 exports.inputBorderClasses = inputBorderClasses;
 exports.inputDarkClasses = inputDarkClasses;
 exports.inputErrorClasses = inputErrorClasses;
@@ -707,3 +843,6 @@ exports.selectorOptionClasses = selectorOptionClasses;
 exports.selectorOptionSelectedClasses = selectorOptionSelectedClasses;
 exports.sizeClasses = sizeClasses;
 exports.textErrorClasses = textErrorClasses;
+exports.toastClasses = toastClasses;
+exports.toastCloseClasses = toastCloseClasses;
+exports.toastContainerClasses = toastContainerClasses;

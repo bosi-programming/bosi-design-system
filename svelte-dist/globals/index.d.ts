@@ -3,4 +3,7 @@ export * from './Input';
 export * from './Typography';
 export * from './styles';
 export * from './Selector';
+export * from './IconButton';
+export * from './Banner';
+export * from './Toast';
 //# sourceMappingURL=index.d.ts.map

@@ -5,6 +5,10 @@ import { Instagram } from './Instagram';
 import { Linkedin } from './Linkedin';
 import { BrasilFlag } from './BrasilFlag';
 import { USAFlag } from './USAFlag';
+import { ChevronDown } from './ChevronDown';
+import { Close } from './Close';
+import { Pencil } from './Pencil';
+import { Trash } from './Trash';
 
 function IconsGallery() {
   const icons = [
@@ -13,6 +17,10 @@ function IconsGallery() {
     { name: 'Linkedin', component: <Linkedin /> },
     { name: 'PtColor (Brazil Flag)', component: <BrasilFlag className="" /> },
     { name: 'EnColor (USA Flag)', component: <USAFlag className="" /> },
+    { name: 'Trash', component: <Trash /> },
+    { name: 'Pencil', component: <Pencil /> },
+    { name: 'ChevronDown', component: <ChevronDown /> },
+    { name: 'Close', component: <Close /> },
   ];
 
   return (

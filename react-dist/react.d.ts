@@ -1,7 +1,22 @@
+import { HTMLAttributes } from 'react';
 import { JSX } from 'react/jsx-runtime';
 import { ReactNode } from 'react';
 
 export declare const actionClasses: Record<ButtonAction, string>;
+
+export declare function Banner({ type, children, className }: BannerProps): JSX.Element;
+
+export declare const bannerBaseClasses = "w-full rounded-xl px-4 py-3 text-body text-white dark:border dark:border-white";
+
+export declare interface BannerProps {
+    type: BannerType;
+    children: ReactNode;
+    className?: string;
+}
+
+export declare type BannerType = 'error' | 'warning' | 'info';
+
+export declare const bannerTypeClasses: Record<BannerType, string>;
 
 export declare const baseButtonClasses = "enabled:hover:scale-110 rounded-[10px] cursor-pointer border-none outline-transparent text-body enabled:hover:brightness-75 disabled:cursor-not-allowed disabled:bg-gray-68 disabled:text-gray-15 dark:disabled:bg-nav-background-on-dark dark:disabled:text-gray-68";
 
@@ -55,6 +70,13 @@ export declare interface ChevronDownProps {
     size?: string;
 }
 
+export declare function Close({ className, size }: CloseProps): JSX.Element;
+
+export declare interface CloseProps {
+    className?: string;
+    size?: string;
+}
+
 export declare const colorsClasses: Record<ButtonColor, string>;
 
 export declare const fakePlaceholderStyles = "dark:text-gray-68! text-gray-68!";
@@ -74,6 +96,19 @@ export declare function Github({ className, size }: GithubProps): JSX.Element;
 export declare interface GithubProps {
     className?: string;
     size?: string;
+}
+
+export declare function IconButton({ action, className, ...props }: IconButtonProps): JSX.Element;
+
+export declare type IconButtonAction = 'delete' | 'edit';
+
+export declare const iconButtonActionClasses: Record<IconButtonAction, string>;
+
+export declare const iconButtonBaseClasses = "flex h-11 w-11 items-center justify-center rounded-[10px] cursor-pointer enabled:hover:brightness-75 disabled:cursor-not-allowed";
+
+export declare interface IconButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'children' | 'aria-label'> {
+    action: IconButtonAction;
+    'aria-label': string;
 }
 
 export declare function Input({ name, disabled, required, value, setValue, label, placeholder, className, type, error, }: InputProps): JSX.Element;
@@ -117,6 +152,13 @@ export declare interface PaperProps {
     children: ReactNode;
     isCard?: boolean;
     className?: string;
+}
+
+export declare function Pencil({ className, size }: PencilProps): JSX.Element;
+
+export declare interface PencilProps {
+    className?: string;
+    size?: string;
 }
 
 export declare const placeholderStyles = "dark:placeholder:text-gray-68! placeholder:text-gray-68";
@@ -172,6 +214,29 @@ export declare const sizeClasses: Record<ButtonSize, string>;
 export declare type TColor = 'default' | 'primary' | 'secondary' | 'error';
 
 export declare const textErrorClasses = "mt-2 text-error dark:text-error-on-dark";
+
+export declare function Toast({ message, onClose, closeLabel }: ToastProps): JSX.Element;
+
+export declare const toastClasses = "pointer-events-auto flex w-full items-center gap-2 rounded-xl bg-error py-1 pl-4 pr-1 text-white shadow-paper dark:border dark:border-white dark:shadow-paper-dark";
+
+export declare const toastCloseClasses = "flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center";
+
+export declare function ToastContainer({ className, children, ...props }: HTMLAttributes<HTMLDivElement>): JSX.Element;
+
+export declare const toastContainerClasses = "pointer-events-none fixed inset-x-4 top-4 z-50 flex flex-col gap-2 md:left-auto md:w-[360px]";
+
+export declare interface ToastProps {
+    message: ReactNode;
+    onClose: () => void;
+    closeLabel: string;
+}
+
+export declare function Trash({ className, size }: TrashProps): JSX.Element;
+
+export declare interface TrashProps {
+    className?: string;
+    size?: string;
+}
 
 export declare type TSize = 'body' | 'h1' | 'h2' | 'h3' | 'h4' | 'details';
 
