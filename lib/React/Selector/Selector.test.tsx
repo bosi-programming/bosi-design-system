@@ -112,6 +112,30 @@ describe('Selector design', () => {
     expect(combobox).toHaveClass('border-error');
     expect(combobox).not.toHaveClass('border-gray-68');
   });
+  it('should use the Penpot error tokens on the dark theme', () => {
+    render(<Selector options={defaultOptions} name="test" error="Error message" />);
+    expect(screen.getByRole('combobox')).toHaveClass('dark:border-error-on-dark');
+    const error = screen.getByText('Error message');
+    expect(error).toHaveClass('dark:text-error-on-dark');
+    expect(error).not.toHaveClass('dark:text-gray-93');
+  });
+
+  it('should use emerald on focus in both themes', () => {
+    render(<Selector options={defaultOptions} name="test" />);
+    const combobox = screen.getByRole('combobox');
+    expect(combobox).toHaveClass('focus:border-emerald', 'focus:ring-emerald', 'dark:placeholder-gray-68');
+    expect(combobox).not.toHaveClass('focus:border-blue-500');
+    expect(combobox).not.toHaveClass('dark:placeholder-emerald');
+    expect(combobox).not.toHaveClass('dark:focus:border-emerald');
+    expect(combobox).not.toHaveClass('dark:focus:ring-emerald');
+  });
+
+  it('should use gray-68 for the empty value and the icon on the dark theme', () => {
+    const { container } = render(<Selector options={defaultOptions} name="test" />);
+    expect(screen.getByRole('combobox')).toHaveClass('dark:text-gray-68!', 'text-gray-68!');
+    expect(container.querySelector('svg')).toHaveClass('dark:text-gray-68');
+  });
+
   it('should align label and error with the field and keep the error 8px below it', () => {
     render(<Selector options={defaultOptions} name="test" label="Label" error="Error message" />);
     expect(screen.getByText('Label')).not.toHaveClass('ml-2');

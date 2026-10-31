@@ -111,7 +111,7 @@ describe('Typography color options', () => {
                 children: 'Test',
             },
         });
-        expect(screen.getByRole('paragraph')).toHaveClass('light:text-black dark:text-gray-93');
+        expect(screen.getByRole('paragraph')).toHaveClass('text-black dark:text-gray-93');
     });
     it('should have primary color classes', () => {
         render(Typography, {
@@ -130,6 +130,19 @@ describe('Typography color options', () => {
             },
         });
         expect(screen.getByRole('paragraph')).toHaveClass('text-secondary-on-light dark:text-secondary-on-dark');
+    });
+});
+describe('Typography error color', () => {
+    it('should have error color classes', () => {
+        render(Typography, {
+            props: {
+                color: 'error',
+                children: 'Test',
+            },
+        });
+        const paragraph = screen.getByRole('paragraph');
+        expect(paragraph).toHaveClass('text-error', 'dark:text-error-on-dark');
+        expect(paragraph).not.toHaveClass('text-black');
     });
 });
 describe('Typography size classes', () => {
@@ -157,7 +170,7 @@ describe('Typography size classes', () => {
                 children: 'Test',
             },
         });
-        expect(screen.getByRole('heading')).toHaveClass('text-h2 font-bold');
+        expect(screen.getByRole('heading')).toHaveClass('text-h2 font-extrabold');
     });
     it('should have h3 classes', () => {
         render(Typography, {

@@ -31,7 +31,7 @@ export function Input({
       <input
         required={required}
         id={name}
-        className={`h-11 w-full rounded-xl border bg-white px-2 text-black focus:border-blue-500 focus:ring-blue-500 ${placeholderStyles} ${inputDarkClasses} ${error ? inputErrorClasses : inputBorderClasses}`}
+        className={`focus:border-emerald focus:ring-emerald h-11 w-full rounded-xl border bg-white px-2 text-black ${placeholderStyles} ${inputDarkClasses} ${error ? inputErrorClasses : inputBorderClasses}`}
         placeholder={placeholder}
         value={value}
         onChange={(e) => setValue(e.target.value)}
@@ -43,7 +43,7 @@ export function Input({
         aria-describedby={label ? `label-${name}` : undefined}
       />
       {error ? (
-        <Typography size="details" as="p" id={`error-${name}`} className={textErrorClasses}>
+        <Typography size="details" as="p" color="error" id={`error-${name}`} className={textErrorClasses}>
           {error}
         </Typography>
       ) : null}

@@ -7,7 +7,7 @@ export interface ButtonBaseProps {
     size?: ButtonSize;
     action?: ButtonAction;
 }
-export declare const baseButtonClasses = "hover:scale-110 rounded-lg cursor-pointer border-none outline-transparent text-body hover:brightness-75 disabled:cursor-not-allowed disabled:bg-gray-15";
+export declare const baseButtonClasses = "enabled:hover:scale-110 rounded-[10px] cursor-pointer border-none outline-transparent text-body enabled:hover:brightness-75 disabled:cursor-not-allowed disabled:bg-gray-68 disabled:text-gray-15 dark:disabled:bg-nav-background-on-dark dark:disabled:text-gray-68";
 export declare const actionClasses: Record<ButtonAction, string>;
 export declare const colorsClasses: Record<ButtonColor, string>;
 export declare const sizeClasses: Record<ButtonSize, string>;

@@ -19,6 +19,18 @@ describe('Button size options', () => {
         expect(screen.getByRole('button')).toHaveClass(sizeClasses['full-width']);
     });
 });
+describe('Button Penpot classes', () => {
+    it('should forward disabled and use the Penpot disabled colours', () => {
+        render(Button, { props: { children: 'Test', disabled: true, color: 'primary' } });
+        const button = screen.getByRole('button');
+        expect(button).toBeDisabled();
+        expect(button).toHaveClass('disabled:bg-gray-68', 'disabled:text-gray-15', 'dark:disabled:bg-nav-background-on-dark', 'dark:disabled:text-gray-68', 'enabled:hover:scale-110');
+    });
+    it('should have the Penpot height and radius', () => {
+        render(Button, { props: { children: 'Test', size: 'small' } });
+        expect(screen.getByRole('button')).toHaveClass('h-8.5', 'px-4', 'rounded-[10px]');
+    });
+});
 describe('Button color options', () => {
     it('should have default color classes', () => {
         render(Button, { props: { children: 'Test' } });
