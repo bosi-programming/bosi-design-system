@@ -7,3 +7,4 @@ export * from './ChevronDown';
 export * from './Trash';
 export * from './Pencil';
 export * from './Close';
+export * from './Menu';

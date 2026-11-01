@@ -1,5 +1,14 @@
-export const navigationClasses = 'flex flex-col gap-2 bg-nav-background-on-light px-4 py-3 md:flex-row md:items-center md:justify-between md:px-6 dark:bg-nav-background-on-dark';
-export const navigationGroupClasses = 'flex gap-2';
-export const navItemBaseClasses = 'rounded-lg px-3 py-2 text-body leading-[18px]';
+export const navigationClasses = 'relative bg-nav-background-on-light dark:bg-nav-background-on-dark';
+export const navigationBarClasses = 'flex h-14 items-center justify-between py-1.5 pl-4 pr-1.5 md:hidden';
+export const navigationTitleClasses = 'text-[18px] font-medium text-black dark:text-white';
+export const navigationMenuButtonClasses = 'flex h-11 w-11 cursor-pointer items-center justify-center rounded-lg text-black dark:text-white';
+export const navigationOverlayClasses = 'fixed inset-0 z-40 bg-overlay md:hidden';
+export const navigationPanelClasses = 'absolute inset-x-0 top-0 z-50 flex-col gap-2 bg-nav-background-on-light pb-4 shadow-[0_4px_12px_rgb(0_0_0/0.2)] md:static md:z-auto md:flex md:flex-row md:items-center md:justify-between md:gap-2 md:px-6 md:py-3 md:shadow-none dark:bg-nav-background-on-dark';
+export const navigationPanelOpenClasses = 'flex';
+export const navigationPanelClosedClasses = 'hidden';
+export const navigationLeftItemsClasses = 'flex flex-col gap-1 px-4 md:flex-row md:gap-2 md:px-0';
+export const navigationDividerClasses = 'mx-4 h-px border-0 bg-gray-68 md:hidden';
+export const navigationRightItemsClasses = 'flex gap-2 px-4 pt-2 max-md:[&>*]:h-11 max-md:[&>*]:flex-1 md:px-0 md:pt-0';
+export const navItemBaseClasses = 'rounded-lg px-3 py-2 text-body leading-[18px] max-md:block max-md:w-full max-md:py-[13px]';
 export const navItemDefaultClasses = 'text-black dark:text-white';
 export const navItemActiveClasses = 'bg-primary-on-light text-white dark:bg-primary-on-dark dark:text-black';

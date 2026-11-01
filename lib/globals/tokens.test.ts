@@ -49,7 +49,9 @@ describe('design tokens', () => {
     expect(
       source
         .trimStart()
-        .startsWith("@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;800&display=swap');"),
+        .startsWith(
+          "@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;800&display=swap');",
+        ),
     ).toBe(true);
   });
 });

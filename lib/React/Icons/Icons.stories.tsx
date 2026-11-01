@@ -7,6 +7,7 @@ import { BrasilFlag } from './BrasilFlag';
 import { USAFlag } from './USAFlag';
 import { ChevronDown } from './ChevronDown';
 import { Close } from './Close';
+import { Menu } from './Menu';
 import { Pencil } from './Pencil';
 import { Trash } from './Trash';
 
@@ -21,6 +22,7 @@ function IconsGallery() {
     { name: 'Pencil', component: <Pencil /> },
     { name: 'ChevronDown', component: <ChevronDown /> },
     { name: 'Close', component: <Close /> },
+    { name: 'Menu', component: <Menu /> },
   ];
 
   return (

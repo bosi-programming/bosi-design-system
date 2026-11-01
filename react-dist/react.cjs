@@ -99,9 +99,18 @@ const modalContentClasses = "text-body text-black dark:text-gray-93";
 const modalActionsClasses = "flex flex-col-reverse gap-2 md:flex-row md:justify-end";
 const modalFocusableSelector = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
-const navigationClasses = "flex flex-col gap-2 bg-nav-background-on-light px-4 py-3 md:flex-row md:items-center md:justify-between md:px-6 dark:bg-nav-background-on-dark";
-const navigationGroupClasses = "flex gap-2";
-const navItemBaseClasses = "rounded-lg px-3 py-2 text-body leading-[18px]";
+const navigationClasses = "relative bg-nav-background-on-light dark:bg-nav-background-on-dark";
+const navigationBarClasses = "flex h-14 items-center justify-between py-1.5 pl-4 pr-1.5 md:hidden";
+const navigationTitleClasses = "text-[18px] font-medium text-black dark:text-white";
+const navigationMenuButtonClasses = "flex h-11 w-11 cursor-pointer items-center justify-center rounded-lg text-black dark:text-white";
+const navigationOverlayClasses = "fixed inset-0 z-40 bg-overlay md:hidden";
+const navigationPanelClasses = "absolute inset-x-0 top-0 z-50 flex-col gap-2 bg-nav-background-on-light pb-4 shadow-[0_4px_12px_rgb(0_0_0/0.2)] md:static md:z-auto md:flex md:flex-row md:items-center md:justify-between md:gap-2 md:px-6 md:py-3 md:shadow-none dark:bg-nav-background-on-dark";
+const navigationPanelOpenClasses = "flex";
+const navigationPanelClosedClasses = "hidden";
+const navigationLeftItemsClasses = "flex flex-col gap-1 px-4 md:flex-row md:gap-2 md:px-0";
+const navigationDividerClasses = "mx-4 h-px border-0 bg-gray-68 md:hidden";
+const navigationRightItemsClasses = "flex gap-2 px-4 pt-2 max-md:[&>*]:h-11 max-md:[&>*]:flex-1 md:px-0 md:pt-0";
+const navItemBaseClasses = "rounded-lg px-3 py-2 text-body leading-[18px] max-md:block max-md:w-full max-md:py-[13px]";
 const navItemDefaultClasses = "text-black dark:text-white";
 const navItemActiveClasses = "bg-primary-on-light text-white dark:bg-primary-on-dark dark:text-black";
 
@@ -554,6 +563,27 @@ function Close({ className, size }) {
   );
 }
 
+function Menu({ className, size }) {
+  const finalSize = size || "24px";
+  return /* @__PURE__ */ jsxRuntime.jsxs(
+    "svg",
+    {
+      className,
+      height: finalSize,
+      width: finalSize,
+      viewBox: "0 0 24 24",
+      fill: "currentColor",
+      "aria-hidden": "true",
+      xmlns: "http://www.w3.org/2000/svg",
+      children: [
+        /* @__PURE__ */ jsxRuntime.jsx("rect", { x: "3", y: "6", width: "18", height: "2", rx: "1" }),
+        /* @__PURE__ */ jsxRuntime.jsx("rect", { x: "3", y: "11", width: "18", height: "2", rx: "1" }),
+        /* @__PURE__ */ jsxRuntime.jsx("rect", { x: "3", y: "16", width: "18", height: "2", rx: "1" })
+      ]
+    }
+  );
+}
+
 function IconButton({ action, className, ...props }) {
   return /* @__PURE__ */ jsxRuntime.jsx(
     "button",
@@ -696,10 +726,74 @@ function NavItem({ active, className, children, ...props }) {
     }
   );
 }
-function Navigation({ items, actions, className, ...props }) {
+function Navigation({ leftItems, rightItems, title, className, ...props }) {
+  const [open, setOpen] = react.useState(false);
+  const panelId = react.useId();
+  const menuButtonRef = react.useRef(null);
+  const closeButtonRef = react.useRef(null);
+  react.useEffect(() => {
+    if (!open) return;
+    const menuButton = menuButtonRef.current;
+    closeButtonRef.current?.focus();
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      menuButton?.focus();
+    };
+  }, [open]);
+  const closeOnItemClick = (event) => {
+    const item = event.target.closest("a, button");
+    if (item && !item.matches(":disabled")) setOpen(false);
+  };
   return /* @__PURE__ */ jsxRuntime.jsxs("nav", { ...props, className: `${navigationClasses} ${className ?? ""}`, children: [
-    /* @__PURE__ */ jsxRuntime.jsx("div", { className: navigationGroupClasses, children: items }),
-    actions ? /* @__PURE__ */ jsxRuntime.jsx("div", { className: navigationGroupClasses, children: actions }) : null
+    /* @__PURE__ */ jsxRuntime.jsxs("div", { className: `${navigationBarClasses} ${open ? "invisible" : ""}`, children: [
+      /* @__PURE__ */ jsxRuntime.jsx("span", { className: navigationTitleClasses, children: title }),
+      /* @__PURE__ */ jsxRuntime.jsx(
+        "button",
+        {
+          ref: menuButtonRef,
+          type: "button",
+          "aria-label": "Open menu",
+          "aria-expanded": open,
+          "aria-controls": panelId,
+          className: navigationMenuButtonClasses,
+          onClick: () => setOpen(true),
+          children: /* @__PURE__ */ jsxRuntime.jsx(Menu, {})
+        }
+      )
+    ] }),
+    open ? /* @__PURE__ */ jsxRuntime.jsx("div", { "data-testid": "navigation-overlay", className: navigationOverlayClasses, onClick: () => setOpen(false) }) : null,
+    /* @__PURE__ */ jsxRuntime.jsxs(
+      "div",
+      {
+        id: panelId,
+        className: `${navigationPanelClasses} ${open ? navigationPanelOpenClasses : navigationPanelClosedClasses}`,
+        children: [
+          /* @__PURE__ */ jsxRuntime.jsxs("div", { className: navigationBarClasses, children: [
+            /* @__PURE__ */ jsxRuntime.jsx("span", { className: navigationTitleClasses, children: title }),
+            /* @__PURE__ */ jsxRuntime.jsx(
+              "button",
+              {
+                ref: closeButtonRef,
+                type: "button",
+                "aria-label": "Close menu",
+                className: navigationMenuButtonClasses,
+                onClick: () => setOpen(false),
+                children: /* @__PURE__ */ jsxRuntime.jsx(Close, {})
+              }
+            )
+          ] }),
+          /* @__PURE__ */ jsxRuntime.jsx("div", { className: navigationLeftItemsClasses, onClick: closeOnItemClick, children: leftItems }),
+          rightItems ? /* @__PURE__ */ jsxRuntime.jsxs(jsxRuntime.Fragment, { children: [
+            /* @__PURE__ */ jsxRuntime.jsx("hr", { className: navigationDividerClasses }),
+            /* @__PURE__ */ jsxRuntime.jsx("div", { className: navigationRightItemsClasses, onClick: closeOnItemClick, children: rightItems })
+          ] }) : null
+        ]
+      }
+    )
   ] });
 }
 
@@ -908,6 +1002,7 @@ exports.IconButton = IconButton;
 exports.Input = Input;
 exports.Instagram = Instagram;
 exports.Linkedin = Linkedin;
+exports.Menu = Menu;
 exports.Modal = Modal;
 exports.NavItem = NavItem;
 exports.Navigation = Navigation;
@@ -943,8 +1038,17 @@ exports.modalOverlayClasses = modalOverlayClasses;
 exports.navItemActiveClasses = navItemActiveClasses;
 exports.navItemBaseClasses = navItemBaseClasses;
 exports.navItemDefaultClasses = navItemDefaultClasses;
+exports.navigationBarClasses = navigationBarClasses;
 exports.navigationClasses = navigationClasses;
-exports.navigationGroupClasses = navigationGroupClasses;
+exports.navigationDividerClasses = navigationDividerClasses;
+exports.navigationLeftItemsClasses = navigationLeftItemsClasses;
+exports.navigationMenuButtonClasses = navigationMenuButtonClasses;
+exports.navigationOverlayClasses = navigationOverlayClasses;
+exports.navigationPanelClasses = navigationPanelClasses;
+exports.navigationPanelClosedClasses = navigationPanelClosedClasses;
+exports.navigationPanelOpenClasses = navigationPanelOpenClasses;
+exports.navigationRightItemsClasses = navigationRightItemsClasses;
+exports.navigationTitleClasses = navigationTitleClasses;
 exports.placeholderStyles = placeholderStyles;
 exports.selectorAddNewClasses = selectorAddNewClasses;
 exports.selectorBaseClasses = selectorBaseClasses;
